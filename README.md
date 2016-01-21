@@ -1,4 +1,4 @@
-##Angular 2.X TypeScript starter kit
+##ng2-snd
 
 
 ###Installation
@@ -19,7 +19,3 @@ To run:
 ```bash
 gulp
 ```
-
-###Usage
-
-The starter kit is meant to be used by anyone who wants to get a taste of Angular 2.X apps 
