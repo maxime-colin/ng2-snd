@@ -13,10 +13,12 @@ gulp.task('connect', ['copy'], function() {
 
 gulp.task('scripts', function() {
 	return gulp.src('./src/app.ts')
-    .on('error', gutil.log)
     .pipe(webpack(require('./webpack.config.js')))
+    .on('error', function handleError() {
+      this.emit('end'); // Recover from errors
+    })    
     .pipe(gulp.dest('./build'))
-    .pipe(livereload());
+    .pipe(livereload())
   ;
 });
 
@@ -25,9 +27,8 @@ gulp.task('copy', function() {
   return gulp.src(['./src/**/**.*', '!./src/**/**.ts'], {
       base: './src'
     })
-    .on('error', gutil.log)
     .pipe(gulp.dest('./build'))
-    .pipe(livereload());
+    .pipe(livereload())
   ;
 });
 

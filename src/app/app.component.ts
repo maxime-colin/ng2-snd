@@ -1,6 +1,5 @@
 import { Component, View } from 'angular2/core';
 import { BoardListService } from './services/board-list.service';
-import { SubComponent } from './components/subcomponent/subcomponent.component';
 
 @Component({
 	selector: 'my-app',
@@ -9,24 +8,19 @@ import { SubComponent } from './components/subcomponent/subcomponent.component';
 @View({
 	template: `
 	<ul>
-	<li>{{ appStatus }}</li>
-	<li>{{ serviceStatus }}</li>
-	<sub-component></sub-component>
+	<li *ngFor="#board of boards">{{ board.title }}</li>
 	</ul>
 	`,
-	directives: [SubComponent]
+	directives: []
 })
 export class MyAppComponent {
-	appStatus: string;
-	serviceStatus: string;
-
+	boards: any;
 	constructor(boardListService: BoardListService) {
-		//this.serviceStatus = myService.getMessage();
-		this.appStatus = 'Application is working.';
 
-
+		var self = this;
 		boardListService.get().subscribe(function(boards) {
-			console.log('boards', boards);
+			console.log(boards);
+			self.boards = boards;
 		});
 	
 		
