@@ -25,7 +25,8 @@ gulp.task('scripts', function() {
 gulp.task('copy', function() {
 
   return gulp.src(['./src/**/**.*', '!./src/**/**.ts'], {
-      base: './src'
+      base: './src',
+      dot: true
     })
     .pipe(gulp.dest('./build'))
     .pipe(livereload())

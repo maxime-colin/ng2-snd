@@ -1,28 +1,30 @@
-import { Component, View } from 'angular2/core';
-import { BoardListService } from './services/board-list.service';
+import {Component, View} from 'angular2/core';
+import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router'
+
+import {BoardListComponent} from './components/board-list.component';
+import {BoardDetailComponent} from './components/board-detail.component';
+
 
 @Component({
 	selector: 'my-app',
-	bindings: [BoardListService]
+	bindings: []
 })
 @View({
-	template: `
-	<ul>
-	<li *ngFor="#board of boards">{{ board.title }}</li>
-	</ul>
-	`,
-	directives: []
+	templateUrl: 'app/app.template.html',
+	directives: [ROUTER_DIRECTIVES]
 })
+@RouteConfig([
+	{
+		path:'/',
+		name: 'BoardList',
+		component: BoardListComponent
+	},
+	{
+		path:'/board/:boardId', 
+		name: 'BoardDetail', 
+		component: BoardDetailComponent
+	},
+])
 export class MyAppComponent {
-	boards: any;
-	constructor(boardListService: BoardListService) {
 
-		var self = this;
-		boardListService.get().subscribe(function(boards) {
-			console.log(boards);
-			self.boards = boards;
-		});
-	
-		
-	}
 }
