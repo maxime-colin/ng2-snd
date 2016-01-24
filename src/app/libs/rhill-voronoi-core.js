@@ -1575,13 +1575,13 @@ Voronoi.prototype.dumpBeachline = function(y) {
 // added.
 
 Voronoi.prototype.quantizeSites = function(sites) {
-    var Îµ = this.EPSILON,
+    var a = this.EPSILON,
         n = sites.length,
         site;
     while ( n-- ) {
         site = sites[n];
-        site.x = Math.floor(site.x / Îµ) * Îµ;
-        site.y = Math.floor(site.y / Îµ) * Îµ;
+        site.x = Math.floor(site.x / a) * a;
+        site.y = Math.floor(site.y / a) * a;
         }
     };
 

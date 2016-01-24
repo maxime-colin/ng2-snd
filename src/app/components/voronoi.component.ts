@@ -38,6 +38,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 	}
 
 	updateContainerSize() {
+		console.log('resize');
 		this.height = this.dom.offsetHeight;
 		this.width = this.dom.offsetWidth;
 	}
@@ -48,14 +49,15 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 		// Point
 		let tileCount = Object.keys(this.board.tiles).length;
 		for (var i = 0; i < tileCount; ++i) {
-			this.points.push(new Point(
-				Math.random() *  this.width,
-				Math.random() *  this.height
-			));
+			this.points.push({
+				x: Math.random() *  this.width,
+				y: Math.random() *  this.height,
+				ref: Math.random(),
+				path: null
+			});
 		}
 
-		// Voronoi Diagram
-		this.calculateVoronoi();
+
 
 		// Two
 		let params = {
@@ -65,9 +67,43 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 		};
 		this.two = new Two(params).appendTo(this.dom);
 
+	
+		this.calculateVoronoi();
+
+
+		this.two.bind('update', this.render.bind(this)).play();
+	}
+
+get_polygon_centroid(pts) {
+   var first = pts[0], last = pts[pts.length-1];
+   if (first.x != last.x || first.y != last.y) pts.push(first);
+   var twicearea=0,
+   x=0, y=0,
+   nPts = pts.length,
+   p1, p2, f;
+   for ( var i=0, j=nPts-1 ; i<nPts ; j=i++ ) {
+      p1 = pts[i]; p2 = pts[j];
+      f = p1.x*p2.y - p2.x*p1.y;
+      twicearea += f;          
+      x += ( p1.x + p2.x ) * f;
+      y += ( p1.y + p2.y ) * f;
+   }
+   f = twicearea * 3;
+   return { x:x/f, y:y/f };
+}
+
+	render(frameCount) {
+
+		this.two.clear();
+		this.two.width = this.width;
+		this.two.height = this.height;
+
+
+		// Voronoi Diagram
+		this.calculateVoronoi();
+
 		for (let i in this.points) {
 			let point = this.points[i];
-			console.log(point.x, point.y);
 			var circle = this.two.makeCircle(point.x, point.y, 10);
 			circle.fill = '#FF8000';
 		}
@@ -81,27 +117,25 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 					halfedge.getStartpoint().x,
 					halfedge.getStartpoint().y
 				));
-				anchors.push(new Two.Anchor(
-					halfedge.getEndpoint().x,
-					halfedge.getEndpoint().y
-				));
 			}
 	
-			var outer = new Two.Path(anchors, true, false);
+			var outer = new Two.Path(anchors, false, false);
 			outer.fill = '#00B2B2';
-			
 			outer.opacity = 0.5;
+
+			cell.site.path = outer;
 
 			this.two.add(outer);
 		};
 
 
+		for (var cellId in this.diagram.cells){
+			let cell = this.diagram.cells[cellId];
 
-		this.two.bind('update', this.render).play();
-	}
-
-	render(frameCount) {
-		
+			var center = this.get_polygon_centroid(cell.site.path.vertices);
+			cell.site.x = center.x;
+			cell.site.y = center.y;
+		}
 	}
 
 
@@ -111,7 +145,6 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 		var sites = this.points;
 		this.diagram = voronoi.compute(sites, bbox);
 
-		console.log(this.diagram);
 
 	}
 }

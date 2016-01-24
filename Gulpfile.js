@@ -37,6 +37,6 @@ gulp.task('build', ['scripts', 'copy']);
 
 gulp.task('default', ['scripts', 'copy', 'connect'], function() {
   livereload.listen();
-  gulp.watch(['!./src/**/**.ts', './src/**/**.*'], ['copy']);
-  gulp.watch('./src/**/**.ts', ['scripts']);
+  //gulp.watch(['!./src/**/**.ts', './src/**/**.*'],{debounceDelay: 2000}, ['copy']);
+  gulp.watch('./src/**/**.ts', {debounceDelay: 20}, ['scripts']);
 });
