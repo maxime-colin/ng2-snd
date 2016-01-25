@@ -1,19 +1,8 @@
 export class Point {
 
-	x:number;
-	y:number;
-	ref: any;
-	path: any;
-
 	constructor(
-		x:number,
-		y:number,
-		ref?:any,
-		path?:any
+		public x:number,
+		public y:number
 	) {
-		this.x = x;
-		this.y = y;
-		this.ref = ref;
-		this.path = path;
 	}
 }

@@ -1,6 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 /// <reference path="../typings/two.d.ts" />
 /// <reference path="../typings/voronoi.d.ts" />
+/// <reference path="../typings/lodash.d.ts" />
 
 
 import 'angular2/bundles/angular2-polyfills';
