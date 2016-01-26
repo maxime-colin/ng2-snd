@@ -27,7 +27,9 @@ export class VoronoiBoard {
 	}
 
 	set dimension(dimension: Dimension) {
+		console.log('resize', dimension);
 		this._dimension = dimension;
+		this.diagram.dimension = dimension;
 	}
 
 	private _populateFromBoard(board): void {
@@ -43,10 +45,10 @@ export class VoronoiBoard {
 	}
 
 	private _getRandomPoint(): Point {
-		return {
-			x : Math.floor(Math.random() *  this.dimension.width),
-			y : Math.floor(Math.random() *  this.dimension.height)
-		}
+		return new Point(
+			Math.floor(Math.random() *  this.dimension.width),
+			Math.floor(Math.random() *  this.dimension.height)
+		);
 	}
 
 }

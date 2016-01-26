@@ -26,24 +26,18 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 
 
 	ngOnInit() {
-		console.log(this.board);
 		this.dom = this._elementRef.nativeElement;
-
-
-
-		//this.updateContainerSize();
-		//this.voronoi = new Voronoi();
-
-
 	}
 
 	onResize(event) {
-		_.throttle(() => {
-			this.voronoiBoard.dimension = new Dimension(
-				this.dom.offsetWidth,
-				this.dom.offsetHeight
-			);
-		}, 1000);
+		this.throttledResize();
+	}
+
+	throttledResize() {
+		this.voronoiBoard.dimension = new Dimension(
+			this.dom.offsetWidth,
+			this.dom.offsetHeight
+		);
 	}
 
 	ngAfterViewInit() {
@@ -55,9 +49,6 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 				this.dom.offsetHeight
 			)
 		);
-
-		console.log(this.voronoiBoard);
-
 
 		// Point
 
@@ -73,7 +64,12 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 
 		this.two = new Two(params).appendTo(this.dom);
 
-		this.render();		
+		setInterval(() => {
+
+			this.voronoiBoard.diagram.relaxCells();
+
+			this.render();		
+		}, 32);
 
 
 		
