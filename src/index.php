@@ -1,10 +1,9 @@
 <html>
 
 	<head>
-		<title>Angular2 Starter</title>
+		<title>Soundboard</title>
 
-	<!-- 	<base href="/Projets/ng2-snd/build/" /> -->
-		<base href="/projects/ng2-snd/build/" />
+		<base href="<?php echo dirname($_SERVER['PHP_SELF']); ?>/" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<style type="text/css">
 			body {

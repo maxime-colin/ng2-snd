@@ -22,6 +22,7 @@ export class VoronoiDiagram {
 
 	set dimension(dimension: Dimension) {
 		this._dimension = dimension;
+		this._keepCellsInBounds();
 	}
 
 	public compute(): void {
@@ -41,8 +42,8 @@ export class VoronoiDiagram {
 		for(let cellId in this._diagram.cells) {
 			let cell = this._diagram.cells[cellId];
 			let path:Array<Point> = [];
-			for (let halfedgeId in cell.halfedges) {
-				let halfedge = cell.halfedges[halfedgeId];
+			for (const halfedgeId in cell.halfedges) {
+				const halfedge = cell.halfedges[halfedgeId];
 				path.push(new Point(
 					halfedge.getStartpoint().x,
 					halfedge.getStartpoint().y
@@ -70,11 +71,18 @@ export class VoronoiDiagram {
 
 
 	private _replacePointWithCentroid() {
-		for(let cellId in this.cells) {
-			let cell = this.cells[cellId];
-			let centroid = cell.centroidPosition();
-			//console.log(centroid.distanceTo(cell.position));
-			cell.position = centroid;
+		for(const cellId in this.cells) {
+			const cell = this.cells[cellId];
+			cell.position = cell.centroidPosition();
+		}
+	}
+
+
+	private _keepCellsInBounds():void {
+		for(const cellId in this.cells) {
+			const cell = this.cells[cellId];
+			cell.position.x = Math.min(cell.position.x, this.dimension.width);
+			cell.position.y = Math.min(cell.position.y, this.dimension.height);
 		}
 	}
 }

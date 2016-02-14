@@ -23,11 +23,15 @@ export class VoronoiCell {
 		var first = this.path[0];
 		var last = this.path[this.path.length-1];
 
+		if( ! first) {
+			return this.position;
+		}
+
 		if (first.x != last.x || first.y != last.y){
 			this.path.push(first);
 		}
 
-		var twicearea=0;
+		var twicearea = 0;
 		var x = 0;
 		var y = 0;
 		var nPts = this.path.length;

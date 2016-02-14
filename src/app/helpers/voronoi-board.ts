@@ -27,7 +27,6 @@ export class VoronoiBoard {
 	}
 
 	set dimension(dimension: Dimension) {
-		console.log('resize', dimension);
 		this._dimension = dimension;
 		this.diagram.dimension = dimension;
 	}
