@@ -56,7 +56,7 @@ export class VoronoiDiagram {
 
 	private _calculateVoronoiDiagram(): void {
 		if(this._diagram) {
-			this._voronoi.recycle(this._diagram);
+		//	this._voronoi.recycle(this._diagram);
 		}
 
 		let bbox = {

@@ -16,7 +16,7 @@ export class BoardListService {
 
 			// Get a database reference to our posts
 			var ref = new Firebase("https://mc-pad-test.firebaseio.com/boards/");
-		
+
 			// Attach an asynchronous callback to read the data at our posts reference
 			ref.on("value", function(snapshot) {
 

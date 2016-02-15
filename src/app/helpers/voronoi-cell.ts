@@ -24,7 +24,8 @@ export class VoronoiCell {
 		var last = this.path[this.path.length-1];
 
 		if( ! first) {
-			return this.position;
+			console.error('No first !!', this.path);
+		//	return this.position;
 		}
 
 		if (first.x != last.x || first.y != last.y){
@@ -50,8 +51,8 @@ export class VoronoiCell {
 		f = twicearea * 3;
 
 		return new Point(
-			x/f,
-			y/f
+			Math.round(x/f),
+			Math.round(y/f)
 		);		
 	}
 }

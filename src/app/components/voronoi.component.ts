@@ -25,9 +25,8 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 
 
 	) {
-		this.throttledResize = _.throttle(this.resizeHandler, 250);
+		this.throttledResize = _.throttle(this.resizeHandler, 500);
 	}
-
 
 	ngOnInit() {
 		this.dom = this._elementRef.nativeElement;
@@ -79,7 +78,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 	}
 
 	relax() {
-		_.times(300, () => {
+		_.times(100, () => {
 			this.voronoiBoard.diagram.relaxCells();
 		});
 	}
