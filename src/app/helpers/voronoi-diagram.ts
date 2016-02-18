@@ -6,6 +6,7 @@ export class VoronoiDiagram {
 
 	private _diagram: any;
 	private _voronoi: any;
+	public throttledRelaxCellsMultiple: Function;
 
 
 	constructor(
@@ -15,30 +16,33 @@ export class VoronoiDiagram {
 		this._voronoi = new Voronoi();
 	}
 
-
 	get dimension(): Dimension {
 		return this._dimension;
 	}
 
 	set dimension(dimension: Dimension) {
 		this._dimension = dimension;
+		this.relaxCellsMultiple();
 	}
 
 	public compute(): void {
 		this._calculateVoronoiDiagram();
 		this._updateCellsPath();
+		this.relaxCellsMultiple();
 	}
 
 
 	public relaxCells() {
-		_.times(100, () => {
-			this._replacePointWithCentroid();
-			this._keepCellsInBounds();
-			this._calculateVoronoiDiagram();
-			this._updateCellsPath();
-		});
+		this._replacePointWithCentroid();
+		this._ratioConstraint();
+		this._keepCellsInBounds();
+		this._calculateVoronoiDiagram();
+		this._updateCellsPath();
 	}
 
+	public relaxCellsMultiple() {
+		_.times(100, () => this.relaxCells());
+	}
 
 	private _updateCellsPath(): void {
 		for(let cellId in this._diagram.cells) {
@@ -80,8 +84,40 @@ export class VoronoiDiagram {
 	private _keepCellsInBounds():void {
 		for(const cellId in this.cells) {
 			const cell = this.cells[cellId];
-			cell.position.x = Math.min(cell.position.x, this.dimension.width);
-			cell.position.y = Math.min(cell.position.y, this.dimension.height);
+			cell.position.x = Math.min(cell.position.x, this.dimension.width - 10);
+			cell.position.y = Math.min(cell.position.y, this.dimension.height - 10);
+		}
+	}
+
+	private _ratioConstraint():void {
+
+		if(this.cells.length <= 1) {
+			return
+		}
+
+		let minRatio = Infinity;
+
+		for(const cellId in this.cells) {
+			const cell = this.cells[cellId];
+			const boundingBox = cell.boundingBox();
+			const ratio = (boundingBox[1].x - boundingBox[0].x) / (boundingBox[1].y - boundingBox[0].y);
+
+			minRatio = Math.min(minRatio, ratio);
+		}
+
+		if(minRatio < 1.5){
+			return;
+		}
+
+		for(const cellId in this.cells) {
+			const cell = this.cells[cellId];
+			const boundingBox = cell.boundingBox();
+			const ratio = (boundingBox[1].x - boundingBox[0].x) / (boundingBox[1].y - boundingBox[0].y);
+
+			if(ratio > 1.5) {
+				cell.position.x += 	(boundingBox[1].x - boundingBox[0].x) * (Math.random() - 0.5) / 3;
+				cell.position.y += 	(boundingBox[1].y - boundingBox[0].y) * (Math.random() - 0.5) / 3;
+			}
 		}
 	}
 }

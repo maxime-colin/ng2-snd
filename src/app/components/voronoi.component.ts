@@ -19,23 +19,35 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 	dom: any;
 	two: any;
 	throttledResize: Function;
-	
+
+	/**
+	 * Constructor
+	 * @param _elementRef
+     */
 	constructor(
 		private _elementRef: ElementRef
-
-
 	) {
-		this.throttledResize = _.throttle(this.resizeHandler, 32);
+		this.throttledResize = _.throttle(this.resizeHandler, 16);
 	}
 
+	/**
+	 * On init
+	 */
 	ngOnInit() {
 		this.dom = this._elementRef.nativeElement;
 	}
 
+	/**
+	 * On resize
+	 * @param event
+     */
 	onResize(event) {
 		this.throttledResize();
 	}
 
+	/**
+	 * Resize handler
+	 */
 	resizeHandler() {
 		const width = this.dom.offsetWidth;
 		const height = this.dom.offsetHeight;
@@ -45,10 +57,11 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 			width,
 			height
 		);
-
-		this.relax();
 	}
 
+	/**
+	 * After view init
+	 */
 	ngAfterViewInit() {
 
 		this.voronoiBoard = new VoronoiBoard(
@@ -68,26 +81,18 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 
 		this.two = new Two(params).appendTo(this.dom);
 
-		this.relax();
+		this.voronoiBoard.diagram.relaxCells();
 		window.requestAnimationFrame(() => this.render());
 	}
 
-	relax() {
-		this.voronoiBoard.diagram.relaxCells();
-	}
 
+	/**
+	 * Render loop
+	 */
 	render() {
 		this.two.clear();
-
-
-		// Voronoi Diagram
-
-		for (let i in this.voronoiBoard.cells) {
-			let point = this.voronoiBoard.cells[i];
-			var circle = this.two.makeCircle(point.x, point.y, 10);
-			circle.fill = '#FF8000';
-		}
-
+const scaleRatio = 0.95;
+		// Cells path
 		for (const i in this.voronoiBoard.cells) {
 			const cell = this.voronoiBoard.cells[i];
 			const anchors = [];
@@ -99,26 +104,18 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 				));
 			}
 
-			const outer = new Two.Path(anchors, false, false);
+			const outer = new Two.Path(anchors, true, false);
+			outer.scale = scaleRatio;
 			outer.fill = '#00B2B2';
 			outer.opacity = 0.5;
+			outer.translation.set(cell.x * (1-scaleRatio), cell.y * (1-scaleRatio));
 			this.two.add(outer);
-
-			// Rectangle
-			const boundingBox = cell.boundingBox();
-			const width = boundingBox[1].x - boundingBox[0].x;
-			const height = boundingBox[1].y - boundingBox[0].y;
-			var rectangle = this.two.makeRectangle(
-				boundingBox[0].x + (width / 2),
-				boundingBox[0].y + (height / 2),
-				width,
-				height
-			);
-			rectangle.noFill();
 		}
 
+		// Update view
 		this.two.update();
 
+		// Request next frame
 		window.requestAnimationFrame(() => this.render());
 	}
 
