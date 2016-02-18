@@ -24,8 +24,8 @@ export class VoronoiCell {
 		var last = this.path[this.path.length-1];
 
 		if( ! first) {
-			console.error('No first !!', this.path);
-		//	return this.position;
+			//console.error('No first !!', this.path);
+			return this.position;
 		}
 
 		if (first.x != last.x || first.y != last.y){
@@ -44,7 +44,7 @@ export class VoronoiCell {
 			p1 = this.path[i];
 			p2 = this.path[j];
 			f = p1.x*p2.y - p2.x*p1.y;
-			twicearea += f;          
+			twicearea += f;
 			x += ( p1.x + p2.x ) * f;
 			y += ( p1.y + p2.y ) * f;
 		}
@@ -53,6 +53,29 @@ export class VoronoiCell {
 		return new Point(
 			Math.round(x/f),
 			Math.round(y/f)
-		);		
+		);
+	}
+
+	public boundingBox() {
+
+		var first 	= this.path[0];
+		var xRight 	= first.x;
+		var xLeft 	= first.x;
+		var yTop 	= first.y;
+		var yBottom = first.y;
+
+		var pathLenght = this.path.length;
+		for(var i = 1; i < pathLenght; i++) {
+			const current = this.path[i];
+			if(xRight < current.x)	xRight = current.x;
+			if(xLeft > current.x) 	xLeft = current.x;
+			if(yTop > current.y) 	yTop = current.y;
+			if(yBottom < current.y) yBottom = current.y;
+		}
+
+		return [
+			new Point(xLeft, yTop),
+			new Point(xRight, yBottom)
+		]
 	}
 }

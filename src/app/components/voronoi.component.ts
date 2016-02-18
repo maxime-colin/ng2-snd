@@ -25,7 +25,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 
 
 	) {
-		this.throttledResize = _.throttle(this.resizeHandler, 500);
+		this.throttledResize = _.throttle(this.resizeHandler, 32);
 	}
 
 	ngOnInit() {
@@ -59,11 +59,6 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 			)
 		);
 
-		// Point
-
-
-
-
 		// Two
 		let params = {
 			width: this.dom.offsetWidth,
@@ -78,9 +73,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 	}
 
 	relax() {
-		_.times(100, () => {
-			this.voronoiBoard.diagram.relaxCells();
-		});
+		this.voronoiBoard.diagram.relaxCells();
 	}
 
 	render() {
@@ -98,7 +91,6 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 		for (const i in this.voronoiBoard.cells) {
 			const cell = this.voronoiBoard.cells[i];
 			const anchors = [];
-
 			for (const pointId in cell.path) {
 				const point = cell.path[pointId];
 				anchors.push(new Two.Anchor(
@@ -106,11 +98,23 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 					point.y
 				));
 			}
-	
+
 			const outer = new Two.Path(anchors, false, false);
 			outer.fill = '#00B2B2';
 			outer.opacity = 0.5;
 			this.two.add(outer);
+
+			// Rectangle
+			const boundingBox = cell.boundingBox();
+			const width = boundingBox[1].x - boundingBox[0].x;
+			const height = boundingBox[1].y - boundingBox[0].y;
+			var rectangle = this.two.makeRectangle(
+				boundingBox[0].x + (width / 2),
+				boundingBox[0].y + (height / 2),
+				width,
+				height
+			);
+			rectangle.noFill();
 		}
 
 		this.two.update();

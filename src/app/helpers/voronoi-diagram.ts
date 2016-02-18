@@ -22,7 +22,6 @@ export class VoronoiDiagram {
 
 	set dimension(dimension: Dimension) {
 		this._dimension = dimension;
-		this._keepCellsInBounds();
 	}
 
 	public compute(): void {
@@ -32,9 +31,12 @@ export class VoronoiDiagram {
 
 
 	public relaxCells() {
-		this._replacePointWithCentroid();
-		this._calculateVoronoiDiagram();
-		this._updateCellsPath();
+		_.times(100, () => {
+			this._replacePointWithCentroid();
+			this._keepCellsInBounds();
+			this._calculateVoronoiDiagram();
+			this._updateCellsPath();
+		});
 	}
 
 
@@ -55,9 +57,6 @@ export class VoronoiDiagram {
 
 
 	private _calculateVoronoiDiagram(): void {
-		if(this._diagram) {
-		//	this._voronoi.recycle(this._diagram);
-		}
 
 		let bbox = {
 			xl: 0,
