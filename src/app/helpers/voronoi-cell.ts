@@ -1,9 +1,9 @@
-import {Point} from './point';
+import {VoronoiPoint} from './point';
 
 export class VoronoiCell {
 
-	public position: Point;
-	public path: Array<Point>;
+	public position: VoronoiPoint;
+	public path: Array<VoronoiPoint>;
 
 	constructor(
 		public cell: any
@@ -19,7 +19,7 @@ export class VoronoiCell {
 		return this.position.y;
 	}
 
-	public centroidPosition(): Point {
+	public centroidPosition(): VoronoiPoint {
 		var first = this.path[0];
 		var last = this.path[this.path.length-1];
 
@@ -50,7 +50,7 @@ export class VoronoiCell {
 		}
 		f = twicearea * 3;
 
-		return new Point(
+		return new VoronoiPoint(
 			Math.round(x/f),
 			Math.round(y/f)
 		);
@@ -74,8 +74,8 @@ export class VoronoiCell {
 		}
 
 		return [
-			new Point(xLeft, yTop),
-			new Point(xRight, yBottom)
+			new VoronoiPoint(xLeft, yTop),
+			new VoronoiPoint(xRight, yBottom)
 		]
 	}
 }

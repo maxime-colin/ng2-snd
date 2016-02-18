@@ -1,4 +1,4 @@
-import {Point} from '../helpers/point';
+import {VoronoiPoint} from '../helpers/point';
 import {VoronoiCell} from '../helpers/voronoi-cell';
 import {Dimension} from '../helpers/dimension';
 
@@ -47,10 +47,10 @@ export class VoronoiDiagram {
 	private _updateCellsPath(): void {
 		for(let cellId in this._diagram.cells) {
 			let cell = this._diagram.cells[cellId];
-			let path:Array<Point> = [];
+			let path:Array<VoronoiPoint> = [];
 			for (const halfedgeId in cell.halfedges) {
 				const halfedge = cell.halfedges[halfedgeId];
-				path.push(new Point(
+				path.push(new VoronoiPoint(
 					halfedge.getStartpoint().x,
 					halfedge.getStartpoint().y
 				));

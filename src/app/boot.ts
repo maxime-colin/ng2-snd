@@ -1,4 +1,5 @@
 /// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../typings/paper.d.ts" />
 /// <reference path="../typings/two.d.ts" />
 /// <reference path="../typings/voronoi.d.ts" />
 /// <reference path="../typings/lodash.d.ts" />

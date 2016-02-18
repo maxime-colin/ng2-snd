@@ -1,4 +1,4 @@
-import {Point} from '../helpers/point';
+import {VoronoiPoint} from '../helpers/point';
 import {VoronoiCell} from '../helpers/voronoi-cell';
 import {VoronoiDiagram} from '../helpers/voronoi-diagram';
 import {Dimension} from '../helpers/dimension';
@@ -43,8 +43,8 @@ export class VoronoiBoard {
 		}
 	}
 
-	private _getRandomPoint(): Point {
-		return new Point(
+	private _getRandomPoint(): VoronoiPoint {
+		return new VoronoiPoint(
 			Math.floor(Math.random() *  this.dimension.width),
 			Math.floor(Math.random() *  this.dimension.height)
 		);

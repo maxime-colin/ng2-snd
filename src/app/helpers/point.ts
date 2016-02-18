@@ -1,4 +1,4 @@
-export class Point {
+export class VoronoiPoint {
 
 	constructor(
 		public x:number,
@@ -6,7 +6,7 @@ export class Point {
 	) {
 	}
 
-	distanceTo(target: Point) {
+	distanceTo(target: VoronoiPoint) {
 		return Math.sqrt(
 			Math.pow(this.x - target.x, 2) +
 			Math.pow(this.y - target.y, 2)
