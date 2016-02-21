@@ -4,6 +4,7 @@ export class VoronoiCell {
 
 	public position: VoronoiPoint;
 	public path: Array<VoronoiPoint>;
+	public hovered: boolean;
 
 	constructor(
 		public cell: any
@@ -64,8 +65,8 @@ export class VoronoiCell {
 		var yTop 	= first.y;
 		var yBottom = first.y;
 
-		var pathLenght = this.path.length;
-		for(var i = 1; i < pathLenght; i++) {
+		var pathLength = this.path.length;
+		for(var i = 1; i < pathLength; i++) {
 			const current = this.path[i];
 			if(xRight < current.x)	xRight = current.x;
 			if(xLeft > current.x) 	xLeft = current.x;
@@ -78,4 +79,25 @@ export class VoronoiCell {
 			new VoronoiPoint(xRight, yBottom)
 		]
 	}
+
+	public pointIntersection(point) {
+		// ray-casting algorithm based on
+		// http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+		var x = point.x, y = point.y;
+
+		var inside = false;
+		for (var i = 0, j = this.path.length - 1; i < this.path.length; j = i++) {
+			console.log(i, j);
+
+			var xi = this.path[i].x, yi = this.path[i].x;
+			var xj = this.path[j].y, yj = this.path[j].y;
+
+			var intersect = ((yi > y) != (yj > y))
+				&& (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+			if (intersect) inside = !inside;
+		}
+
+		return inside;
+	};
 }

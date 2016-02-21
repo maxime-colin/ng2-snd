@@ -6,6 +6,7 @@ export class VoronoiDiagram {
 
 	private _diagram: any;
 	private _voronoi: any;
+	private _quadTree: any;
 	public throttledRelaxCellsMultiple: Function;
 
 
@@ -23,12 +24,27 @@ export class VoronoiDiagram {
 	set dimension(dimension: Dimension) {
 		this._dimension = dimension;
 		this.relaxCellsMultiple();
+		this._buildTreeMap();
+	}
+
+	public getCellAtPosition(position: VoronoiPoint) {
+	//	const items = this._quadTree.retrieve(position);
+console.log('getCellAtPosition', position);
+		for(let itemId in this.cells) {
+			let item = this.cells[itemId];
+			if(item.pointIntersection(position)) {
+				console.log(item);
+			}
+		}
+debugger;
+		return false;
 	}
 
 	public compute(): void {
 		this._calculateVoronoiDiagram();
 		this._updateCellsPath();
 		this.relaxCellsMultiple();
+		this._buildTreeMap();
 	}
 
 
@@ -38,6 +54,7 @@ export class VoronoiDiagram {
 		this._keepCellsInBounds();
 		this._calculateVoronoiDiagram();
 		this._updateCellsPath();
+		this._buildTreeMap();
 	}
 
 	public relaxCellsMultiple() {
@@ -58,7 +75,6 @@ export class VoronoiDiagram {
 			(<VoronoiCell>cell.site).path = path;
 		}
 	}
-
 
 	private _calculateVoronoiDiagram(): void {
 
@@ -119,5 +135,27 @@ export class VoronoiDiagram {
 				cell.position.y += 	(boundingBox[1].y - boundingBox[0].y) * (Math.random() - 0.5) / 3;
 			}
 		}
+	}
+
+	private _buildTreeMap() {
+		const bounds = {
+			x:0,
+			y:0,
+			width: this._dimension.width,
+			height: this._dimension.height
+		};
+		this._quadTree = new QuadTree(bounds);
+
+		// Insert cells in quad tree
+		_.each(this.cells, cell => {
+			const bbox = cell.boundingBox();
+			this._quadTree.insert({
+				x: bbox[0].x,
+				y: bbox[0].y,
+				width: bbox[1].x - bbox[0].x,
+				height: bbox[1].y - bbox[0].y,
+				cell: cell
+			});
+		});
 	}
 }

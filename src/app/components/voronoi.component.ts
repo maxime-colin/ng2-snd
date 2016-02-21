@@ -2,6 +2,7 @@ import {Component, View, OnInit, AfterViewInit, Input, ElementRef} from 'angular
 import {VoronoiPoint} from '../helpers/point';
 import {Dimension} from '../helpers/dimension';
 import {VoronoiBoard} from '../helpers/voronoi-board';
+import {HostListener} from "angular2/core";
 
 @Component({
 	selector: 'voronoi',
@@ -28,6 +29,12 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 		private _elementRef: ElementRef
 	) {
 		this.throttledResize = _.throttle(this.resizeHandler, 16);
+	}
+
+	@HostListener('mousemove', ['$event'])
+	onMouseMove(event) {
+		const cell = this.voronoiBoard.getCellAtPosition(new VoronoiPoint(event.x, event.y));
+		console.log(cell);
 	}
 
 	/**
@@ -112,7 +119,12 @@ export class VoronoiComponent implements OnInit, AfterViewInit{
 			const cell = this.voronoiBoard.cells[i];
 			const path = new this.paper.Path();
 			const center = new this.paper.Point(cell.position);
+
 			path.fillColor = spotColor;
+			if(cell.hovered) {
+				path.fillColor = '#FF0000';
+				console.log(cell);
+			}
 			path.closed = true;
 
 			for (var pointId = 0; pointId < cell.path.length; pointId++) {

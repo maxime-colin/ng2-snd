@@ -31,6 +31,10 @@ export class VoronoiBoard {
 		this.diagram.dimension = dimension;
 	}
 
+	public getCellAtPosition(position: VoronoiPoint) {
+		return this.diagram.getCellAtPosition(position);
+	}
+
 	private _populateFromBoard(board): void {
 		for(let cellId in board.tiles) {
 			this.cells.push(new VoronoiCell(board.tiles[cellId]));
