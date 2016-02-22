@@ -1,8 +1,10 @@
 import {Component, View, OnInit, AfterViewInit, Input, ElementRef} from 'angular2/core';
-import {VoronoiPoint} from '../helpers/point';
-import {Dimension} from '../helpers/dimension';
-import {VoronoiBoard} from '../helpers/voronoi-board';
 import {HostListener} from "angular2/core";
+import {VoronoiDiagram} from "../geometry-manager/voronoi/voronoi-diagram";
+import {Dimension} from "../geometry-manager/common/dimension";
+import {VoronoiBoard} from "../geometry-manager/voronoi/voronoi-board";
+import {VoronoiRenderer} from "../geometry-manager/voronoi/voronoi-renderer";
+import {Point} from "../geometry-manager/common/point";
 
 @Component({
 	selector: 'voronoi',
@@ -12,168 +14,91 @@ import {HostListener} from "angular2/core";
 	template: `<div (window:resize)="onResize($event)"></div>`,
 	directives: []
 })
-export class VoronoiComponent implements OnInit, AfterViewInit{
-	
+export class VoronoiComponent implements OnInit, AfterViewInit {
+
+	// Input
 	@Input() board: any;
-	
-	voronoiBoard: VoronoiBoard;
-	dom: any;
-	throttledResize: Function;
-	paper: any
+
+	// Attributes
+	private diagram: VoronoiDiagram;
+	private renderer: VoronoiRenderer;
+	private throttledResize;
+
 
 	/**
-	 * Constructor
-	 * @param _elementRef
+	 * @param elementRef
      */
 	constructor(
-		private _elementRef: ElementRef
-	) {
-		this.throttledResize = _.throttle(this.resizeHandler, 16);
-	}
-
-	@HostListener('mousemove', ['$event'])
-	onMouseMove(event) {
-		const cell = this.voronoiBoard.getCellAtPosition(new VoronoiPoint(event.x, event.y));
-		console.log(cell);
-	}
+		private elementRef: ElementRef
+	) {}
 
 	/**
 	 * On init
+	 * @returns {undefined}
+     */
+	ngOnInit():any {
+		this.throttledResize = _.throttle(this.resizeHandler, 16);
+	}
+
+	/**
+	 * After view init
+     */
+	ngAfterViewInit():any {
+		this.createDiagram();
+		this.renderer = new VoronoiRenderer(
+			this.elementRef.nativeElement,
+			this.diagram
+		);
+		this.renderer.render();
+	}
+
+
+	/**
+	 * On Mouse move
+	 * @param event
 	 */
-	ngOnInit() {
-		this.dom = this._elementRef.nativeElement;
+	@HostListener('mousemove', ['$event'])
+	onMouseMove(event) {
+		for(let cell of this.diagram.getCells()) {
+			cell.hovered = false;
+		}
+		const cell = this.diagram.getCellAtPosition(new Point(event.x, event.y));
+		if(cell) {
+			cell.hovered = true;
+		}
 	}
 
 	/**
 	 * On resize
 	 * @param event
-     */
+	 */
 	onResize(event) {
 		this.throttledResize();
 	}
 
+	private resizeHandler() {
+		this.diagram.setDimension(this.getDimension());
+		this.diagram.refresh();
+	}
+
 	/**
-	 * Resize handler
-	 */
-	resizeHandler() {
-		const width = this.dom.offsetWidth;
-		const height = this.dom.offsetHeight;
-		this.voronoiBoard.dimension = new Dimension(
-			width,
-			height
+	 * Return DOM element dimension
+	 * @returns {Dimension}
+     */
+	private getDimension():Dimension {
+		return new Dimension(
+			this.elementRef.nativeElement.offsetWidth,
+			this.elementRef.nativeElement.offsetHeight
 		);
 	}
 
 	/**
-	 * After view init
+	 * Create voronoi diagram
 	 */
-	ngAfterViewInit() {
-
-		// Voronoi board (model)
-		this.voronoiBoard = new VoronoiBoard(
-			this.board,
-			new Dimension(
-				this.dom.offsetWidth,
-				this.dom.offsetHeight
-			)
-		);
-
-		// Two
-		//let params = {
-		//	width: this.dom.offsetWidth,
-		//	height: this.dom.offsetHeight,
-		//	type: Two.Types.canvas,
-		//};
-
-	//	this.two = new Two(params).appendTo(this.dom);
-
-		// Create paper
-		var canvas = document.createElement('canvas');
-		this.dom.appendChild(canvas);
-		canvas.setAttribute('resize', 'true');
-		this.paper = new paper.PaperScope();
-		this.paper.setup(canvas);
-
-
-		this.voronoiBoard.diagram.relaxCells();
-		window.requestAnimationFrame(() => this.render());
-	}
-
-
-	/**
-	 * Render loop
-	 */
-	render() {
-		this.paper.project.activeLayer.children = [];
-		var spotColor = '#00B2B2';
-
-		var background = new this.paper.Shape.Rectangle({
-			rectangle: this.paper.view.bounds,
-			fillColor: '#111111'
-		});
-
-		//this.two.clear();
-		//const scaleRatio = 0.95;
-		//// Cells path
-		for (const i in this.voronoiBoard.cells) {
-			const cell = this.voronoiBoard.cells[i];
-			const path = new this.paper.Path();
-			const center = new this.paper.Point(cell.position);
-
-			path.fillColor = spotColor;
-			if(cell.hovered) {
-				path.fillColor = '#FF0000';
-				console.log(cell);
-			}
-			path.closed = true;
-
-			for (var pointId = 0; pointId < cell.path.length; pointId++) {
-				const point = new this.paper.Point(cell.path[pointId]);
-				//const next = new this.paper.Point(cell.path[(pointId + 1) == cell.path.length ? 0 : pointId + 1]);
-				//const vector = (next.subtract(point)).divide(2);
-
-				const vectorToCenter = center.subtract(point);
-				const paddingVector = vectorToCenter.normalize(3);
-
-				path.add({
-					point: point.add(paddingVector),
-					//handleIn: vector.multiply(-0.5),
-					//handleOut: vector.multiply(0.5),
-				});
-			}
-
-			//path.scale(0.95);
-
-		}
-
-		this.paper.view.draw();
-
-		//	const anchors = [];
-		//	for (const pointId in cell.path) {
-		//		const point = cell.path[pointId];
-		//		anchors.push(new Two.Anchor(
-		//			point.x,
-		//			point.y
-		//		));
-		//	}
-        //
-		//	const outer = new Two.Path(anchors, true, false);
-		//	outer.scale = scaleRatio;
-		//	outer.fill = '#00B2B2';
-		//	outer.opacity = 0.5;
-		//	outer.translation.set(cell.x * (1-scaleRatio), cell.y * (1-scaleRatio));
-		//	this.two.add(outer);
-		//}
-        //
-		//// Update view
-		//this.two.update();
-
-		// Request next frame
-		window.requestAnimationFrame(() => this.render());
-	}
-
-	createPath(cell) {
-
+	private createDiagram() {
+		this.diagram = new VoronoiDiagram(this.getDimension());
+		new VoronoiBoard(this.diagram, this.board);
+		this.diagram.initialize();
 	}
 
 }
