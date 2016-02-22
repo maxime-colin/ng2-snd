@@ -1,7 +1,7 @@
 import {Component, View, OnInit} from 'angular2/core';
 import {Router, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router'
 import {BoardListService} from '../services/board-list.service'
-
+import {VoronoiComponent} from "./voronoi.component";
 
 @Component({
 	selector: 'board-list',
@@ -9,7 +9,7 @@ import {BoardListService} from '../services/board-list.service'
 })
 @View({
 	templateUrl: 'app/components/board-list.template.html',
-	directives: [ROUTER_DIRECTIVES]
+	directives: [ROUTER_DIRECTIVES, VoronoiComponent]
 })
 export class BoardListComponent implements OnInit{
 	boards: any;

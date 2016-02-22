@@ -9,7 +9,7 @@ import {VoronoiComponent} from './voronoi.component'
 })
 @View({
 	template: `
-		<voronoi [board]="board" *ngIf="board"></voronoi>
+		<voronoi [board]="board" *ngIf="board" class="Voronoi-full"></voronoi>
 	`,
 	directives: [VoronoiComponent]
 })
