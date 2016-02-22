@@ -3,3 +3,8 @@
 		<a [routerLink]="['BoardDetail', {boardId : board.key }]">{{ board.title }}</a>
 	</li>
 </ul>
+
+
+<div *ngFor="#board of boards" style="height: 20vw; width: 30vw; margin: 20px;">
+	<voronoi [board]="board"></voronoi>
+</div>
