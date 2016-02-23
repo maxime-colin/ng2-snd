@@ -66,14 +66,14 @@ export class VoronoiDiagram {
 	 * Return cell at position
 	 * @param position
 	 */
-	getCellAtPosition(position: Point) {
+	getCellAtPosition(position: Point): VoronoiCell {
 		for(let cell of this.cells) {
 			if(cell.intersectPoint(position)) {
 				return cell;
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 	/**
