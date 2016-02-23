@@ -15,17 +15,26 @@ export class VoronoiBoard {
     /**
      * Create cells with board data
      */
-    private populateFromBoard(): void {
+    private populateFromBoard() {
         const cells: VoronoiCell[] = [];
-        _.each(this.board.tiles, tile => {
+        let i = 2;
+        let length = _.size(this.board.tiles);
+
+        _.each(this.board.tiles, (tile) => {
+            i++;
             cells.push(
                 new VoronoiCell(
                     tile,
-                    Point.random(this.diagram.getDimension())
+                   // Point.random(this.diagram.getDimension())
+                    new Point(
+                        Math.round(this.diagram.getDimension().width  * i / (length  +2)),
+                        Math.round(this.diagram.getDimension().height * i / (length  +2))
+                    )
                 )
             );
         });
         this.diagram.setCells(cells);
     }
+
 
 }
