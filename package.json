@@ -25,7 +25,7 @@
     "gulp-less": "^3.0.5",
     "gulp-livereload": "^3.8.1",
     "gulp-util": "^3.0.7",
-    "rxjs-es": "^5.0.0-beta.1",
+    "rxjs-es": "^5.0.0-bnpm run buildeta.1",
     "ts-loader": "0.7.1",
     "typescript": "1.7.3",
     "webpack": "^1.12.2"

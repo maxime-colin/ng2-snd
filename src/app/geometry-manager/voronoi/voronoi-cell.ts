@@ -1,5 +1,7 @@
 import {Point} from "../common/point";
-
+import {Component} from "angular2/core";
+import {FileDatastore} from "../../services/file-datastore";
+import {AudioService} from "../../audio/audio-service";
 
 export class VoronoiCell {
 
@@ -153,4 +155,12 @@ export class VoronoiCell {
 
 		return inside;
 	};
+
+
+	play(fileDatastore: FileDatastore, audioService:AudioService):void {
+		fileDatastore.get(this.cell.audio).subscribe(data => {
+			console.log(data);
+			audioService.playFromDataURL(data);
+		});
+	}
 }

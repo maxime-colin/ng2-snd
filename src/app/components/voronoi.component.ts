@@ -5,10 +5,13 @@ import {Dimension} from "../geometry-manager/common/dimension";
 import {VoronoiBoard} from "../geometry-manager/voronoi/voronoi-board";
 import {VoronoiRenderer} from "../geometry-manager/voronoi/voronoi-renderer";
 import {Point} from "../geometry-manager/common/point";
+import {FileDatastore} from "../services/file-datastore";
+import {AudioService} from "../audio/audio-service";
+
 
 @Component({
 	selector: 'voronoi',
-	bindings: []
+	bindings: [FileDatastore, AudioService]
 })
 @View({
 	template: `<div (window:resize)="onResize($event)"></div>`,
@@ -29,7 +32,9 @@ export class VoronoiComponent implements OnInit, AfterViewInit {
 	 * @param elementRef
      */
 	constructor(
-		private elementRef: ElementRef
+		private elementRef: ElementRef,
+		private fileDatastore: FileDatastore,
+		private audioService: AudioService
 	) {}
 
 	/**
@@ -57,8 +62,8 @@ export class VoronoiComponent implements OnInit, AfterViewInit {
 	 * On Mouse move
 	 * @param event
 	 */
-	@HostListener('mousemove', ['$event'])
-	onMouseMove(event) {
+	@HostListener('click', ['$event'])
+	onClick(event) {
 		for(let cell of this.diagram.getCells()) {
 			cell.hovered = false;
 		}
@@ -66,7 +71,10 @@ export class VoronoiComponent implements OnInit, AfterViewInit {
 		if(cell) {
 			cell.hovered = true;
 		}
+
+		cell.play(this.fileDatastore, this.audioService);
 	}
+
 
 	/**
 	 * On resize
