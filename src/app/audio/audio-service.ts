@@ -34,7 +34,7 @@ export class AudioService {
      * Play
      */
     public play(source, filter, raw) {
-        this.context.decodeAudioData(raw, function (buffer) {
+        this.context.decodeAudioData(raw, (buffer) => {
         // Check buffer
         if (!buffer) {
             alert('failed to decode: buffer null');
@@ -51,7 +51,7 @@ export class AudioService {
 
         source.start(0);
 
-    }, function (error) {
+    },  (error) => {
         console.error("failed to decode:", error);
     });
 
@@ -83,7 +83,7 @@ export class AudioService {
         var uint8ArrayNew  = null;
         var arrayBufferNew = null;
         var fileReader     = new FileReader();
-        fileReader.onload  = function(progressEvent) {
+        fileReader.onload  = (progressEvent) => {
             callback(fileReader.result);
         };
         fileReader.readAsArrayBuffer(blob);

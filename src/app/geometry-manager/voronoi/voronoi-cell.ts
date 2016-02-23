@@ -159,7 +159,6 @@ export class VoronoiCell {
 
 	play(fileDatastore: FileDatastore, audioService:AudioService):void {
 		fileDatastore.get(this.cell.audio).subscribe(data => {
-			console.log(data);
 			audioService.playFromDataURL(data);
 		});
 	}
