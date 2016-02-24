@@ -13,7 +13,7 @@ export class FileDatastore {
     ){}
 
     public get(location) {
-        return this.http.get(location)
+        return this.http.get(location + '?host=' + window.location.host)
             .map(response => response.json().data);
     }
 

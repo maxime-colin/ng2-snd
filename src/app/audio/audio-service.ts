@@ -6,6 +6,7 @@ export class AudioService {
 
 
     constructor() {
+        console.log('AudioService constructor');
         this.lastPlayed = new Date().getTime();
         this.createContext();
     }

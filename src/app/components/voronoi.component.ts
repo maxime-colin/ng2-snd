@@ -11,7 +11,7 @@ import {AudioService} from "../audio/audio-service";
 
 @Component({
 	selector: 'voronoi',
-	bindings: [FileDatastore, AudioService]
+	bindings: [FileDatastore]
 })
 @View({
 	template: `<div (window:resize)="onResize($event)"></div>`,
@@ -62,16 +62,32 @@ export class VoronoiComponent implements OnInit, AfterViewInit {
 	 * On Mouse move
 	 * @param event
 	 */
-	@HostListener('click', ['$event'])
+	@HostListener('mousedown', ['$event'])
+	@HostListener('touchstart', ['$event'])
 	onClick(event) {
+		event.preventDefault();
+		event.stopPropagation();
+
+		// Remove hovered flag
 		for(let cell of this.diagram.getCells()) {
 			cell.hovered = false;
 		}
-		const cell = this.diagram.getCellAtPosition(new Point(event.x, event.y));
-		if(cell) {
-			cell.hovered = true;
-		}
 
+		// Position
+		const clientX = event.clientX || (event.targetTouches ? event.targetTouches[0].clientX : 0)
+		const clientY = event.clientY || (event.targetTouches ? event.targetTouches[0].clientY : 0)
+
+		const x = clientX - this.elementRef.nativeElement.offsetLeft;
+		const y = clientY - this.elementRef.nativeElement.offsetTop;
+
+		// Look for hovered cell
+		const cell = this.diagram.getCellAtPosition(new Point(x, y));
+		if( ! cell) {
+			return;
+		}
+		cell.hovered = true;
+
+		// Play sound
 		cell.play(this.fileDatastore, this.audioService);
 	}
 
@@ -84,6 +100,9 @@ export class VoronoiComponent implements OnInit, AfterViewInit {
 		this.throttledResize();
 	}
 
+	/**
+	 * Resize diagram
+	 */
 	private resizeHandler() {
 		this.diagram.setDimension(this.getDimension());
 		this.diagram.refresh();
