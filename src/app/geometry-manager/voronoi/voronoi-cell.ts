@@ -62,7 +62,10 @@ export class VoronoiCell {
 	 * Move to centroid position of cell
 	 */
 	public moveToCentroid() {
-		this.setPosition(this.centroidPosition());
+		const centroidPosition = this.centroidPosition();
+		const deltaPosition = this.getPosition().distanceTo(centroidPosition);
+		this.setPosition(centroidPosition);
+		return deltaPosition;
 	}
 
 	/**
