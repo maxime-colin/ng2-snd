@@ -8,6 +8,7 @@ export class VoronoiCell {
 	private path: Point[];
 	public hovered = false;
 	public voronoiId;
+	public color;
 
 	constructor(
 		private cell:any,

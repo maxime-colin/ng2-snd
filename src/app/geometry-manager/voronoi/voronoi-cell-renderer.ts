@@ -29,19 +29,21 @@ export class VoronoiCellRenderer {
 		this.label.position = center;
 
 		this.path.removeSegments();
-		this.path.fillColor = '#00B2B2';
-		if(this.cell.hovered) {
-			this.path.fillColor = '#007F80';
-		}
+		//this.path.fillColor = '#FFFFFF';
+
+		this.path.fillColor = '#' + this.cell.color;
+		this.path.strokeColor= '#263238';
+		this.path.strokeJoin = 'round';
+		this.path.strokeWidth = 1;
 		this.path.closed = true;
 
 		for(let point of this.cell.getPath()) {
 			const paperPoint = new this.paper.Point(point);
 			const vectorToCenter = center.subtract(paperPoint);
-			const paddingVector = vectorToCenter.normalize(3);
+		//	const paddingVector = vectorToCenter.normalize(3);
 
 			this.path.add({
-				point: paperPoint.add(paddingVector),
+				point: paperPoint,
 			});
 		}
 	}

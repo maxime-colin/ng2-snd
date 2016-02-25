@@ -1,4 +1,5 @@
 import {unescape} from "querystring";
+
 export class AudioService {
 
     private context;
@@ -20,13 +21,10 @@ export class AudioService {
 
         if (typeof AudioContext !== "undefined") {
             this.context = new AudioContext();
-        } else { //noinspection TypeScriptUnresolvedVariable
-            if (typeof webkitAudioContext !== "undefined") {
-                //noinspection TypeScriptUnresolvedFunction
-                this.context = new webkitAudioContext();
-            } else {
-                alert('AudioContext not supported. :(');
-            }
+        } else if (typeof webkitAudioContext !== "undefined") {
+            this.context = new webkitAudioContext();
+        } else {
+            alert('AudioContext not supported. :(');
         }
     }
 

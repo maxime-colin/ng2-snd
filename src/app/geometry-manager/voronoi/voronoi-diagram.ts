@@ -3,6 +3,7 @@ import {Dimension} from "../common/dimension";
 import {Point} from "../common/point";
 
 
+
 export class VoronoiDiagram {
 
 	private cells: VoronoiCell[];
@@ -59,7 +60,8 @@ export class VoronoiDiagram {
 	 * Refresh (relax cells)
 	 */
 	refresh() {
-		_.times(100, () => this.relaxCells());
+		_.times(1, () => this.relaxCells());
+		setTimeout(() => this.refresh(), 16);
 	}
 
 	/**
@@ -104,7 +106,6 @@ export class VoronoiDiagram {
 			(<VoronoiCell>rawCell.site).setPathFromHalfedges(rawCell.halfedges);
 		}
 	}
-
 
 	/**
 	 * Move cells to centroid

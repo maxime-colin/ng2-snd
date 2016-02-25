@@ -4,6 +4,7 @@
 /// <reference path="../typings/two.d.ts" />
 /// <reference path="../typings/voronoi.d.ts" />
 /// <reference path="../typings/lodash.d.ts" />
+/// <reference path="../typings/audio-context.d.ts" />
 
 
 import 'angular2/bundles/angular2-polyfills';
