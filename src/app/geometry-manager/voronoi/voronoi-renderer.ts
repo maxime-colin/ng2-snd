@@ -24,6 +24,7 @@ export class VoronoiRenderer {
 		'FFE0B2',
 	];
 
+
 	constructor(
 		private domContainer: any,
 		private diagram: VoronoiDiagram
