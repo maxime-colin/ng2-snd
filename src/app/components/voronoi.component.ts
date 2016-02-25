@@ -105,7 +105,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit {
 	 */
 	private resizeHandler() {
 		this.diagram.setDimension(this.getDimension());
-		this.diagram.refresh();
+		this.diagram.asyncRefresh();
 	}
 
 	/**

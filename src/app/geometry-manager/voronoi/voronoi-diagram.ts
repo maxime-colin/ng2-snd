@@ -9,6 +9,7 @@ export class VoronoiDiagram {
 	private cells: VoronoiCell[];
 	private voronoi;
 	private refreshLoopTimer;
+	private refreshLoopTimerIsRunning = false;
 
 
 	constructor(
@@ -71,19 +72,27 @@ export class VoronoiDiagram {
 	 * Refresh (relax cells)
 	 */
 	asyncRefresh() {
-		this.stopRefreshLoop();
+		//this.stopRefreshLoop();
+		if(this.refreshLoopTimerIsRunning) return;
 		this.startRefreshLoop();
 	}
 
 	private stopRefreshLoop():void {
+		console.log(this.refreshLoopTimer);
 		if( ! this.refreshLoopTimer) return;
+		console.log('stop');
 		clearTimeout(this.refreshLoopTimer);
 	}
 
 	private startRefreshLoop() {
+		this.refreshLoopTimerIsRunning = true;
 		let delta = this.relaxCells();
 		if(delta > 0) {
-			this.refreshLoopTimer = setTimeout(() => this.startRefreshLoop(), 0);
+			this.refreshLoopTimer = setTimeout(() => this.startRefreshLoop(), 16);
+		}
+		else {
+			this.refreshLoopTimerIsRunning = false;
+			console.log('stop');
 		}
 	}
 
