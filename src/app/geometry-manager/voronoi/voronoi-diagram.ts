@@ -124,10 +124,10 @@ export class VoronoiDiagram {
 	 */
 	private calculateDiagram(): void {
 		let boundingBox = {
-			xl: 0,
-			xr: this.dimension.width,
-			yt: 0,
-			yb: this.dimension.height
+			xl: -2,
+			xr: this.dimension.width + 2,
+			yt: -2,
+			yb: this.dimension.height + 2
 		};
 
 		const diagram = this.voronoi.compute(this.cells, boundingBox);
