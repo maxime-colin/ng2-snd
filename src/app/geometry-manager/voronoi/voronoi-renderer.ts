@@ -23,6 +23,7 @@ export class VoronoiRenderer {
 		'E1BEE7',
 		'FFE0B2',
 	];
+	private onFrameMethod = (event) => this.onFrame(event);
 
 
 	constructor(
@@ -50,8 +51,12 @@ export class VoronoiRenderer {
 	 * Render diagram
 	 */
 	public render() {
-		this.paper.view.onFrame = (event) => this.onFrame(event);
+		this.paper.view.attach('frame', this.onFrameMethod);
 		this.paper.view.draw();
+	}
+
+	public stop() {
+		this.paper.view.detach('frame', this.onFrameMethod);
 	}
 
 	private onFrame(event) {

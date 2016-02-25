@@ -4,6 +4,7 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router'
 import {BoardListComponent} from './components/board-list.component';
 import {BoardDetailComponent} from './components/board-detail.component';
 import {AudioService} from "./audio/audio-service";
+import {HomeComponent} from "./components/home.component";
 
 
 @Component({
@@ -16,8 +17,13 @@ import {AudioService} from "./audio/audio-service";
 })
 @RouteConfig([
 	{
-		path:'/board/:boardId', 
-		name: 'BoardDetail', 
+		path:'/',
+		name: 'Home',
+		component: HomeComponent
+	},
+	{
+		path:'/board/:boardId',
+		name: 'BoardDetail',
 		component: BoardDetailComponent
 	},
 ])

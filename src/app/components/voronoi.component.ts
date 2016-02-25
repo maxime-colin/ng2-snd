@@ -7,6 +7,7 @@ import {VoronoiRenderer} from "../geometry-manager/voronoi/voronoi-renderer";
 import {Point} from "../geometry-manager/common/point";
 import {FileDatastore} from "../services/file-datastore";
 import {AudioService} from "../audio/audio-service";
+import {OnDestroy} from "angular2/core";
 
 
 @Component({
@@ -17,7 +18,7 @@ import {AudioService} from "../audio/audio-service";
 	template: `<div (window:resize)="onResize($event)"></div>`,
 	directives: []
 })
-export class VoronoiComponent implements OnInit, AfterViewInit {
+export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 
 	// Input
 	@Input() board: any;
@@ -57,6 +58,9 @@ export class VoronoiComponent implements OnInit, AfterViewInit {
 		this.renderer.render();
 	}
 
+	ngOnDestroy():any {
+		this.renderer.stop();
+	}
 
 	/**
 	 * On Mouse move

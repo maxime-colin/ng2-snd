@@ -1,4 +1,5 @@
 import {VoronoiCell} from "./voronoi-cell";
+import {Path} from "../common/path";
 
 export class VoronoiCellRenderer {
 
@@ -31,21 +32,26 @@ export class VoronoiCellRenderer {
 		this.path.removeSegments();
 		//this.path.fillColor = '#FFFFFF';
 
-		this.path.fillColor = '#' + this.cell.color;
-		this.path.strokeColor= '#263238';
+		//this.path.fillColor = '#' + this.cell.color;
+		this.path.fillColor = '#111111';
+		this.path.strokeColor= '#00B2B2';
 		this.path.strokeJoin = 'round';
 		this.path.strokeWidth = 1;
-		this.path.closed = true;
 
 		for(let point of this.cell.getPath()) {
+			if(point.x < 1) point.x = -2;
 			const paperPoint = new this.paper.Point(point);
-			const vectorToCenter = center.subtract(paperPoint);
-		//	const paddingVector = vectorToCenter.normalize(3);
+			//const vectorToCenter = center.subtract(paperPoint);
+			//const paddingVector = vectorToCenter.normalize(10);
 
 			this.path.add({
 				point: paperPoint,
+		//		point: paperPoint.add(paddingVector),
 			});
 		}
+		//this.path = Path.round(this.path, 25);
+
+		this.path.closed = true;
 	}
 
 }

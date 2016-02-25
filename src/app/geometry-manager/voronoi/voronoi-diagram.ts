@@ -78,9 +78,7 @@ export class VoronoiDiagram {
 	}
 
 	private stopRefreshLoop():void {
-		console.log(this.refreshLoopTimer);
 		if( ! this.refreshLoopTimer) return;
-		console.log('stop');
 		clearTimeout(this.refreshLoopTimer);
 	}
 
@@ -92,7 +90,6 @@ export class VoronoiDiagram {
 		}
 		else {
 			this.refreshLoopTimerIsRunning = false;
-			console.log('stop');
 		}
 	}
 
@@ -160,8 +157,8 @@ export class VoronoiDiagram {
 		for(let cell of this.cells) {
 			const position = cell.getPosition();
 			cell.setPosition(new Point(
-				Math.min(position.x, this.dimension.width - 10),
-				Math.min(position.y, this.dimension.height - 10)
+				Math.min(position.x, this.dimension.width),
+				Math.min(position.y, this.dimension.height)
 			));
 		}
 	}
