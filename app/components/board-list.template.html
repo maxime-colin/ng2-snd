@@ -1,10 +1,8 @@
-<ul>
-	<li *ngFor="#board of boards">
-		<a [routerLink]="['BoardDetail', {boardId : board.key }]">{{ board.title }}</a>
+<ul class="BoardList">
+	<li class="BoardList_item" *ngFor="#board of boards">
+		<a
+			class="BoardList_link"
+			[routerLink]="['BoardDetail', {boardId : board.key }]"
+		>{{ board.title }}</a>
 	</li>
 </ul>
-
-
-<!--<div *ngFor="#board of boards" style="height: 20vw; width: 30vw; margin: 20px;">-->
-	<!--<voronoi [board]="board"></voronoi>-->
-<!--</div>-->
