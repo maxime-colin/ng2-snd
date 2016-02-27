@@ -12,8 +12,20 @@
 				line-height: 60vh;
 				text-align: center;
 				font-size: 20vmin;
-				animation: blink 750ms infinite;
 			}
+
+			.Loading *:nth-child(1) {
+				animation: blink 600ms infinite 0ms;
+			}
+
+			.Loading *:nth-child(2) {
+				animation: blink 600ms infinite 200ms;
+			}
+
+			.Loading *:nth-child(3) {
+				animation: blink 600ms infinite 300ms;
+			}
+
 
 			@keyframes blink{
 				to{opacity: 0.25;}
@@ -23,7 +35,7 @@
 
 	<body class="BodyLayout">
 		<my-app>
-			<div class="Loading">&hellip;</div>
+			<div class="Loading"><span>.</span><span>.</span><span>.</span></div>
 		</my-app>
 
 		<script src="app/libs/QuadTree.js"></script>
