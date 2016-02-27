@@ -1,0 +1,8 @@
+<ul class="BoardList">
+	<li class="BoardList_item" *ngFor="#board of boards">
+		<a
+			class="BoardList_link"
+			[routerLink]="['BoardDetail', {boardId : board.key }]"
+		>{{ board.title }}</a>
+	</li>
+</ul>

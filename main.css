@@ -9,32 +9,47 @@ body {
 }
 Voronoi {
   display: block;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   background: #DADADA;
 }
 Voronoi canvas {
   width: 100%;
   height: 100%;
 }
-.Voronoi-full {
+.Page {
+  position: absolute;
+  display: flex;
   width: 100%;
   height: 100%;
 }
-.Page {
-  display: flex;
-  min-height: 100%;
-}
 .Page_sidebar {
   width: 300px;
+  border-right: 1px solid #00B2B2;
 }
 .Page_content {
   flex: 1;
+  display: flex;
 }
-@media (max-width: 1200px) {
-  .Page_sidebar {
-    width: 25vw;
+@media (max-width: 900px) {
+  .Page {
+    flex-direction: column;
   }
+  .Page_sidebar {
+    height: 120px;
+    border-bottom: 1px solid #00B2B2;
+    border-right: 0;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+boarddetail {
+  display: block;
+  width: 100%;
+  position: relative;
 }
 .BoardList {
   list-style: none;
@@ -42,7 +57,6 @@ Voronoi canvas {
   margin: 0;
   height: 100vh;
   overflow: auto;
-  border-right: 1px solid #00B2B2;
 }
 .BoardList::-webkit-scrollbar {
   width: 0 !important;
@@ -65,7 +79,7 @@ Voronoi canvas {
   font-weight: bold;
   color: #C7CC07;
 }
-@media (max-width: 1200px) {
+@media (max-width: 1200px) and (min-width: 900px) {
   .BoardList_link {
     font-size: 2vw;
   }
