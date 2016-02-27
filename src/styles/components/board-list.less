@@ -4,7 +4,6 @@
 	margin:0;
 	height:100vh;
 	overflow: auto;
-	border-right: 1px solid #00B2B2;
 }
 .BoardList::-webkit-scrollbar {
 	width: 0 !important;
@@ -32,8 +31,14 @@
 }
 
 
-@media (max-width: 1200px) {
+@media (max-width: 1200px) and (min-width: 900px){
 	.BoardList_link {
 		font-size: 2vw;
+	}
+}
+
+@media (max-width: 900px) {
+	.BoardList {
+
 	}
 }

@@ -86,7 +86,7 @@ export class VoronoiDiagram {
 		this.refreshLoopTimerIsRunning = true;
 		let delta = this.relaxCells();
 		if(delta > 0) {
-			this.refreshLoopTimer = setTimeout(() => this.startRefreshLoop());
+			this.refreshLoopTimer = setTimeout(() => this.startRefreshLoop(), 16);
 		}
 		else {
 			this.refreshLoopTimerIsRunning = false;
