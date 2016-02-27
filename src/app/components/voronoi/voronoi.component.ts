@@ -126,6 +126,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 		);
 	}
 
+
 	/**
 	 * Create voronoi diagram
 	 */

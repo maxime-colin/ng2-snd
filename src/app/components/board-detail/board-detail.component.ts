@@ -33,4 +33,6 @@ export class BoardDetailComponent implements OnInit{
 			this.board = board;
 		});
 	}
+
+
 }

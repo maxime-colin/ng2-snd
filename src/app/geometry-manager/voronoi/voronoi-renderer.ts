@@ -1,5 +1,6 @@
 import {VoronoiDiagram} from "./voronoi-diagram";
 import {VoronoiCellRenderer} from "./voronoi-cell-renderer";
+import {Dimension} from "../common/dimension";
 
 
 export class VoronoiRenderer {
@@ -52,6 +53,11 @@ export class VoronoiRenderer {
 	 */
 	public render() {
 		this.paper.view.attach('frame', this.onFrameMethod);
+		this.paper.view.draw();
+	}
+
+	public resize(dimension: Dimension) {
+		this.paper.view.viewSize = new this.paper.Size(dimension.width, dimension.height);
 		this.paper.view.draw();
 	}
 

@@ -1,6 +1,7 @@
 import {VoronoiCell} from "./voronoi-cell";
 import {Dimension} from "../common/dimension";
 import {Point} from "../common/point";
+import {count} from "rxjs-es/operator/count";
 
 
 
@@ -15,6 +16,7 @@ export class VoronoiDiagram {
 	constructor(
 		private dimension: Dimension
 	){
+		console.log('dimension', this.dimension);
 		this.voronoi = new Voronoi();
 	}
 
@@ -62,10 +64,12 @@ export class VoronoiDiagram {
 	 * Refresh (relax cells)
 	 */
 	refresh() {
+		let counter = 0;
 		let delta = 0;
 		do {
 			delta = this.relaxCells();
-		} while(delta > 0);
+			counter++;
+		} while(delta > 0 && counter < 10000);
 	}
 
 	/**
@@ -110,7 +114,7 @@ export class VoronoiDiagram {
 	/**
 	 * Relax cells (one time)
 	 */
-	private relaxCells() {
+	public relaxCells() {
 		const delta = this.movePointToCentroid();
 		this.ratioConstraint();
 		this.keepCellsInBounds();
@@ -171,8 +175,8 @@ export class VoronoiDiagram {
 		if (this.cells.length <= 1) {
 			return
 		}
-
 		let minRatio = Infinity;
+		let maxRatio = 0;
 
 		for (const cellId in this.cells) {
 			const cell = this.cells[cellId];
@@ -180,12 +184,12 @@ export class VoronoiDiagram {
 			const ratio = (boundingBox[1].x - boundingBox[0].x) / (boundingBox[1].y - boundingBox[0].y);
 
 			minRatio = Math.min(minRatio, ratio);
+			maxRatio = Math.max(maxRatio, ratio);
 		}
 
 		if (minRatio < 1.5) {
 			return;
 		}
-
 		for (let cell of this.cells) {
 			const boundingBox = cell.boundingBox();
 			const ratio = (boundingBox[1].x - boundingBox[0].x) / (boundingBox[1].y - boundingBox[0].y);
