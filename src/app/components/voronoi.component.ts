@@ -43,7 +43,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 	 * @returns {undefined}
      */
 	ngOnInit():any {
-		this.throttledResize = _.throttle(this.resizeHandler, 16);
+		this.throttledResize = _.debounce(this.resizeHandler, 1000);
 	}
 
 	/**
@@ -72,9 +72,9 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 		event.preventDefault();
 		event.stopPropagation();
 
-		// Remove hovered flag
+		// Remove clicked flag
 		for(let cell of this.diagram.getCells()) {
-			cell.hovered = false;
+			cell.clicked = false;
 		}
 
 		// Position
@@ -84,12 +84,12 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 		const x = clientX - this.elementRef.nativeElement.offsetLeft;
 		const y = clientY - this.elementRef.nativeElement.offsetTop;
 
-		// Look for hovered cell
+		// Look for clicked cell
 		const cell = this.diagram.getCellAtPosition(new Point(x, y));
 		if( ! cell) {
 			return;
 		}
-		cell.hovered = true;
+		cell.clicked = true;
 
 		// Play sound
 		cell.play(this.fileDatastore, this.audioService);
@@ -109,7 +109,8 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 	 */
 	private resizeHandler() {
 		this.diagram.setDimension(this.getDimension());
-		this.diagram.asyncRefresh();
+	//	setTimeout(() => this.diagram.asyncRefresh());
+		this.diagram.refresh();
 	}
 
 	/**

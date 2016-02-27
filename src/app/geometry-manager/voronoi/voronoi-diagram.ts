@@ -72,21 +72,21 @@ export class VoronoiDiagram {
 	 * Refresh (relax cells)
 	 */
 	asyncRefresh() {
-		//this.stopRefreshLoop();
-		if(this.refreshLoopTimerIsRunning) return;
+		if(this.refreshLoopTimerIsRunning) {
+			return;
+		}
 		this.startRefreshLoop();
 	}
 
-	private stopRefreshLoop():void {
-		if( ! this.refreshLoopTimer) return;
-		clearTimeout(this.refreshLoopTimer);
-	}
 
+	/**
+	 * Start refresh loop
+	 */
 	private startRefreshLoop() {
 		this.refreshLoopTimerIsRunning = true;
 		let delta = this.relaxCells();
 		if(delta > 0) {
-			this.refreshLoopTimer = setTimeout(() => this.startRefreshLoop(), 16);
+			this.refreshLoopTimer = setTimeout(() => this.startRefreshLoop());
 		}
 		else {
 			this.refreshLoopTimerIsRunning = false;

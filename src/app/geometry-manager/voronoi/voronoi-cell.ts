@@ -6,7 +6,7 @@ import {AudioService} from "../../audio/audio-service";
 export class VoronoiCell {
 
 	private path: Point[];
-	public hovered = false;
+	public clicked = false;
 	public voronoiId;
 	public color;
 
