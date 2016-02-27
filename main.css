@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body {
   background-color: #111111;
   padding: 0;
@@ -22,34 +25,60 @@ Voronoi canvas {
 }
 .Page {
   position: absolute;
-  display: flex;
   width: 100%;
   height: 100%;
 }
-.Page_sidebar {
-  width: 300px;
+.Page_navigation {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 25vw;
   border-right: 1px solid #00B2B2;
 }
 .Page_content {
-  flex: 1;
-  display: flex;
+  display: block;
+  position: absolute;
+  left: 25vw;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 @media (max-width: 900px) {
-  .Page {
-    flex-direction: column;
-  }
-  .Page_sidebar {
+  .Page_navigation {
     height: 120px;
+    top: 0;
+    right: 0;
+    left: 0;
     border-bottom: 1px solid #00B2B2;
     border-right: 0;
     width: 100%;
     overflow: hidden;
+    transition: height 350ms ease;
+  }
+  .Page_content {
+    top: 120px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+  .Page-navigationOpened .Page_navigation {
+    height: auto;
+    bottom: 0;
+    border: 0;
+  }
+  .Page-navigationOpened .Page_content {
+    transform: translate3d(100vh, 0, 0);
+    transition: transform 350ms ease;
   }
 }
 boarddetail {
   display: block;
-  width: 100%;
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 .BoardList {
   list-style: none;
