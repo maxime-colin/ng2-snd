@@ -44,7 +44,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 	 * @returns {undefined}
      */
 	ngOnInit():any {
-		this.throttledResize = _.debounce(this.resizeHandler, 1000);
+		this.throttledResize = _.throttle(this.resizeHandler, 250);
 	}
 
 	/**
@@ -111,8 +111,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 	 */
 	private resizeHandler() {
 		this.diagram.setDimension(this.getDimension());
-	//	setTimeout(() => this.diagram.asyncRefresh());
-		this.diagram.refresh();
+		this.renderer.resize(this.getDimension());
 	}
 
 	/**

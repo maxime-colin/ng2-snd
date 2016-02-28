@@ -42,6 +42,10 @@ export class VoronoiDiagram {
 	 */
 	setDimension(dimension: Dimension) {
 		this.dimension = dimension;
+		this.calculateDiagram();
+		this.keepCellsInBounds();
+		this.calculateDiagram();
+		this.refresh();
 	}
 
 	/**
@@ -69,32 +73,7 @@ export class VoronoiDiagram {
 		do {
 			delta = this.relaxCells();
 			counter++;
-		} while(delta > 0 && counter < 10000);
-	}
-
-	/**
-	 * Refresh (relax cells)
-	 */
-	asyncRefresh() {
-		if(this.refreshLoopTimerIsRunning) {
-			return;
-		}
-		this.startRefreshLoop();
-	}
-
-
-	/**
-	 * Start refresh loop
-	 */
-	private startRefreshLoop() {
-		this.refreshLoopTimerIsRunning = true;
-		let delta = this.relaxCells();
-		if(delta > 0) {
-			this.refreshLoopTimer = setTimeout(() => this.startRefreshLoop(), 16);
-		}
-		else {
-			this.refreshLoopTimerIsRunning = false;
-		}
+		} while(delta > 0);
 	}
 
 	/**
