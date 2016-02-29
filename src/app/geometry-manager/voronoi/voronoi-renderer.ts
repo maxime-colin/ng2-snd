@@ -77,7 +77,7 @@ export class VoronoiRenderer {
 	private createCellsRenderer():void {
 		let currentCellColorId = 0;
 
-		for (let cell of this.diagram.getCells()) {
+		for (let cell of this.diagram.getVoronoiCells()) {
 			cell.color = this.cellColors[currentCellColorId];
 			this.cellsRenderer.push(new VoronoiCellRenderer(cell, this.paper));
 

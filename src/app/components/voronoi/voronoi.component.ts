@@ -74,7 +74,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 		event.stopPropagation();
 
 		// Remove clicked flag
-		for(let cell of this.diagram.getCells()) {
+		for(let cell of this.diagram.getVoronoiCells()) {
 			cell.clicked = false;
 		}
 
@@ -87,7 +87,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 		const y = clientY - componentBoundingBox.top;
 
 		// Look for clicked cell
-		const cell = this.diagram.getCellAtPosition(new Point(x, y));
+		const cell = this.diagram.getVoronoiCellAtPosition(new Point(x, y));
 		if( ! cell) {
 			return;
 		}

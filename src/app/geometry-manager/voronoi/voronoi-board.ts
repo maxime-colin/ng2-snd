@@ -33,7 +33,7 @@ export class VoronoiBoard {
                 )
             );
         });
-        this.diagram.setCells(cells);
+        this.diagram.setVoronoiCells(cells);
     }
 
 

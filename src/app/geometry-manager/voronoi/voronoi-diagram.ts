@@ -7,7 +7,7 @@ import {count} from "rxjs-es/operator/count";
 
 export class VoronoiDiagram {
 
-	private cells: VoronoiCell[];
+	private voronoiCell: VoronoiCell[];
 	private voronoi;
 	private refreshLoopTimer;
 	private refreshLoopTimerIsRunning = false;
@@ -16,24 +16,23 @@ export class VoronoiDiagram {
 	constructor(
 		private dimension: Dimension
 	){
-		console.log('dimension', this.dimension);
 		this.voronoi = new Voronoi();
 	}
 
 	/**
-	 * Set cells
-	 * @param cells
+	 * Set voronoiCells
+	 * @param voronoiCells
 	 */
-	setCells(cells:any) {
-		this.cells = cells;
+	setVoronoiCells(voronoiCells:any) {
+		this.voronoiCell = voronoiCells;
 	}
 
 	/**
-	 * Get cells
+	 * Get voronoiCells
 	 * @returns {VoronoiCell[]}
 	 */
-	getCells() {
-		return this.cells;
+	getVoronoiCells() {
+		return this.voronoiCell;
 	}
 
 	/**
@@ -80,10 +79,10 @@ export class VoronoiDiagram {
 	 * Return cell at position
 	 * @param position
 	 */
-	getCellAtPosition(position: Point): VoronoiCell {
-		for(let cell of this.cells) {
-			if(cell.intersectPoint(position)) {
-				return cell;
+	getVoronoiCellAtPosition(position: Point): VoronoiCell {
+		for(let voronoiCell of this.voronoiCell) {
+			if(voronoiCell.intersectPoint(position)) {
+				return voronoiCell;
 			}
 		}
 
@@ -113,7 +112,7 @@ export class VoronoiDiagram {
 			yb: this.dimension.height + 2
 		};
 
-		const diagram = this.voronoi.compute(this.cells, boundingBox);
+		const diagram = this.voronoi.compute(this.voronoiCell, boundingBox);
 
 		// Calculate and inject path to cells
 		for(let rawCell of diagram.cells) {
@@ -127,7 +126,7 @@ export class VoronoiDiagram {
 	private movePointToCentroid() {
 		let cumulativeDelta = 0;
 
-		for(let cell of this.cells) {
+		for(let cell of this.voronoiCell) {
 			cumulativeDelta += cell.moveToCentroid();
 		}
 		return cumulativeDelta;
@@ -137,7 +136,7 @@ export class VoronoiDiagram {
 	 * Keep cells in bounds
 	 */
 	private keepCellsInBounds():void {
-		for(let cell of this.cells) {
+		for(let cell of this.voronoiCell) {
 			const position = cell.getPosition();
 			cell.setPosition(new Point(
 				Math.min(position.x, this.dimension.width),
@@ -151,14 +150,14 @@ export class VoronoiDiagram {
 	 */
 	private ratioConstraint():void {
 
-		if (this.cells.length <= 1) {
+		if (this.voronoiCell.length <= 1) {
 			return
 		}
 		let minRatio = Infinity;
 		let maxRatio = 0;
 
-		for (const cellId in this.cells) {
-			const cell = this.cells[cellId];
+		for (const cellId in this.voronoiCell) {
+			const cell = this.voronoiCell[cellId];
 			const boundingBox = cell.boundingBox();
 			const ratio = (boundingBox[1].x - boundingBox[0].x) / (boundingBox[1].y - boundingBox[0].y);
 
@@ -169,7 +168,7 @@ export class VoronoiDiagram {
 		if (minRatio < 1.5) {
 			return;
 		}
-		for (let cell of this.cells) {
+		for (let cell of this.voronoiCell) {
 			const boundingBox = cell.boundingBox();
 			const ratio = (boundingBox[1].x - boundingBox[0].x) / (boundingBox[1].y - boundingBox[0].y);
 			const position = cell.getPosition();
