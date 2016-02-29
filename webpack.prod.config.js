@@ -133,6 +133,12 @@ module.exports = helpers.validate({
         to: 'assets'
       }
     ]),
+    // static assets
+    new CopyWebpackPlugin([
+      {
+        from: 'src/CNAME'
+      }
+    ]),
     // generating html
     new HtmlWebpackPlugin({ template: 'src/index.html' }),
     new DefinePlugin({
