@@ -70,6 +70,7 @@ module.exports = helpers.validate({
     new webpack.optimize.CommonsChunkPlugin({ name: 'polyfills', filename: 'polyfills.bundle.js', minChunks: Infinity }),
     // static assets
     new CopyWebpackPlugin([ { from: 'src/assets', to: 'assets' } ]),
+    new CopyWebpackPlugin([ { from: 'src/CNAME', to: 'dist'} ]),
     // generating html
     new HtmlWebpackPlugin({ template: 'src/index.html' }),
     // replace
