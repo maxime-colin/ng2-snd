@@ -1,6 +1,6 @@
 import {VoronoiDiagram} from "./voronoi-diagram";
 import {VoronoiCellRenderer} from "./voronoi-cell-renderer";
-import {Dimension} from "../common/dimension";
+import {Dimension} from "./../common/dimension";
 
 
 export class VoronoiRenderer {

@@ -1,7 +1,7 @@
 import {Point} from "../common/point";
-import {Component} from "angular2/core";
-import {FileDatastore} from "../../services/file-datastore";
-import {AudioService} from "../../audio/audio-service";
+import {Component} from "../../../node_modules/angular2/core.d";
+import {FileDatastore} from "./../services/file-datastore";
+import {AudioService} from "./../audio/audio-service";
 
 export class VoronoiCell {
 

@@ -1,11 +1,12 @@
 import {Component, View} from 'angular2/core';
-import {BoardDetailComponent} from './../board-detail/board-detail.component';
-import {HomeComponent} from "./../home/home.component";
 import {ROUTER_DIRECTIVES} from "angular2/router";
 import {RouteConfig} from "angular2/router";
-import {AudioService} from "../../audio/audio-service";
-import {NavigationService} from "../../navigation/navigation.service";
-import {NavigationComponent} from "../../navigation/navigation.component";
+
+import {BoardDetailComponent} from './../board/components/board-detail.component.ts';
+import {HomeComponent} from "../home/home.component";
+import {AudioService} from "./../audio/audio-service";
+import {NavigationService} from "./../navigation/navigation.service";
+import {NavigationComponent} from "./../navigation/navigation.component";
 
 
 @Component({
@@ -16,7 +17,7 @@ import {NavigationComponent} from "../../navigation/navigation.component";
 	}
 })
 @View({
-	templateUrl: 'app/components/soundboard-app/soundboard-app.template.html',
+	template: require('./soundboard-app.template.html'),
 	directives: [ROUTER_DIRECTIVES, NavigationComponent]
 })
 @RouteConfig([

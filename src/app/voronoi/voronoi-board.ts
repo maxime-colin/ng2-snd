@@ -1,8 +1,8 @@
-
-
 import {VoronoiDiagram} from "./voronoi-diagram";
 import {VoronoiCell} from "./voronoi-cell";
 import {Point} from "../common/point";
+
+
 export class VoronoiBoard {
 
     constructor(

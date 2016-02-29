@@ -17,5 +17,5 @@ npm install
 To run:
 
 ```bash
-gulp
+npm run build
 ```

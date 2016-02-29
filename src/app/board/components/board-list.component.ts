@@ -1,14 +1,14 @@
 import {Component, View, OnInit} from 'angular2/core';
 import {Router, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router'
-import {BoardListService} from '../../services/board-list.service'
-import {VoronoiComponent} from "./../voronoi/voronoi.component";
+import {BoardListService} from './board-list.service.ts'
+import {VoronoiComponent} from "./../../voronoi/voronoi.component.ts";
 
 @Component({
 	selector: 'board-list',
 	bindings: [BoardListService]
 })
 @View({
-	templateUrl: 'app/components/board-list/board-list.template.html',
+	template: require('./board-list.template.html'),
 	directives: [ROUTER_DIRECTIVES, VoronoiComponent]
 })
 export class BoardListComponent implements OnInit{

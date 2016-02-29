@@ -1,10 +1,11 @@
-import {BoardListService} from '../../services/board-list.service'
-import {VoronoiComponent} from './../voronoi/voronoi.component'
 import {Router} from "angular2/router";
 import {RouteParams} from "angular2/router";
 import {Component} from "angular2/core";
 import {View} from "angular2/core";
 import {OnInit} from "angular2/core";
+
+import {BoardListService} from './board-list.service.ts'
+import {VoronoiComponent} from './../../voronoi/voronoi.component.ts'
 
 @Component({
 	selector: 'BoardDetail',
@@ -31,6 +32,7 @@ export class BoardDetailComponent implements OnInit{
 		let boardId = this._routeParams.get('boardId');
 		this._boardListService.getBoardById(boardId).subscribe(board => {
 			this.board = board;
+			console.log(board);
 		});
 	}
 

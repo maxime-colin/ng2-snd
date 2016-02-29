@@ -1,7 +1,6 @@
 import {VoronoiCell} from "./voronoi-cell";
-import {Dimension} from "../common/dimension";
-import {Point} from "../common/point";
-import {count} from "rxjs-es/operator/count";
+import {Dimension} from "./../common/dimension";
+import {Point} from "./../common/point";
 
 
 

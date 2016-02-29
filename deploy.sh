@@ -10,7 +10,7 @@ fi
 
 rev=$(git rev-parse --short HEAD)
 
-cd build
+cd dist
 
 git init
 git config user.name "Maxime Colin"

@@ -4,6 +4,6 @@ node_js:
 install:
   - npm install
 script:
-  - gulp dist
+  - npm run build:prod
 after_success:
   - bash deploy.sh

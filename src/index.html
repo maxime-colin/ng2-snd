@@ -1,48 +1,63 @@
-<html>
+<!DOCTYPE html>
+<html lang="">
+<head>
 
-	<head>
-		<title>NG2 - SND</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= webpackConfig.metadata.title %></title>
 
-		<link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="main.css" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="<%= webpackConfig.metadata.title %>">
 
-		<style type="text/css">
-			.Loading {
-				line-height: 60vh;
-				text-align: center;
-				font-size: 20vmin;
-			}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-			.Loading *:nth-child(1) {
-				animation: blink 600ms infinite 0ms;
-			}
+  <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="assets/css/main.css" />
 
-			.Loading *:nth-child(2) {
-				animation: blink 600ms infinite 200ms;
-			}
+  <style type="text/css">
+    .Loading {
+      line-height: 60vh;
+      text-align: center;
+      font-size: 20vmin;
+    }
 
-			.Loading *:nth-child(3) {
-				animation: blink 600ms infinite 300ms;
-			}
+    .Loading *:nth-child(1) {
+      animation: blink 600ms infinite 0ms;
+    }
+
+    .Loading *:nth-child(2) {
+      animation: blink 600ms infinite 200ms;
+    }
+
+    .Loading *:nth-child(3) {
+      animation: blink 600ms infinite 300ms;
+    }
 
 
-			@keyframes blink{
-				to{opacity: 0.25;}
-			}
-		</style>
-	</head>
+    @keyframes blink{
+      to{opacity: 0.25;}
+    }
+  </style>
 
-	<body class="BodyLayout">
-		<soundboard-app>
-			<div class="Loading"><span>.</span><span>.</span><span>.</span></div>
-		</soundboard-app>
+  <!-- base url -->
+  <base href="<%= webpackConfig.metadata.baseUrl %>">
 
-		<script src="app/libs/QuadTree.js"></script>
-		<script src="app/libs/paper-full.js"></script>
-		<script src="app/libs/two.js"></script>
-		<script src="app/libs/rhill-voronoi-core.js"></script>
-		<script src="bundle.js"></script>
-	</body>
+</head>
 
+<body class="BodyLayout">
+  <soundboard-app>
+    <div class="Loading"><span>.</span><span>.</span><span>.</span></div>
+  </soundboard-app>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.1/lodash.min.js"></script>
+  <script src="assets/libs/QuadTree.js"></script>
+  <script src="assets/libs/paper-full.js"></script>
+  <script src="assets/libs/rhill-voronoi-core.js"></script>
+
+  <% if (webpackConfig.metadata.ENV === 'development') { %>
+  <!-- Webpack Dev Server reload -->
+  <script src="http://<%= webpackConfig.metadata.host %>:<%= webpackConfig.metadata.port %>/webpack-dev-server.js"></script>
+  <% } %>
+
+</body>
 </html>

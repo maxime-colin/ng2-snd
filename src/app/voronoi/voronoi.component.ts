@@ -1,13 +1,15 @@
 import {Component, View, OnInit, AfterViewInit, Input, ElementRef} from 'angular2/core';
 import {HostListener} from "angular2/core";
-import {VoronoiDiagram} from "../../geometry-manager/voronoi/voronoi-diagram";
-import {Dimension} from "../../geometry-manager/common/dimension";
-import {VoronoiBoard} from "../../geometry-manager/voronoi/voronoi-board";
-import {VoronoiRenderer} from "../../geometry-manager/voronoi/voronoi-renderer";
-import {Point} from "../../geometry-manager/common/point";
-import {FileDatastore} from "../../services/file-datastore";
-import {AudioService} from "../../audio/audio-service";
 import {OnDestroy} from "angular2/core";
+
+import {Point} from "../common/point";
+import {Dimension} from "../common/dimension";
+
+import {VoronoiDiagram} from "./voronoi-diagram";
+import {VoronoiBoard} from "./voronoi-board";
+import {VoronoiRenderer} from "./voronoi-renderer";
+import {FileDatastore} from "../services/file-datastore";
+import {AudioService} from "../audio/audio-service";
 
 
 @Component({
@@ -32,7 +34,9 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 
 	/**
 	 * @param elementRef
-     */
+	 * @param fileDatastore
+	 * @param audioService
+	 */
 	constructor(
 		private elementRef: ElementRef,
 		private fileDatastore: FileDatastore,

@@ -1,8 +1,7 @@
-import {Component} from "angular2/core";
-import {View} from "angular2/core";
-import {BoardListComponent} from "../components/board-list/board-list.component";
+import {Component, View, OnInit} from "angular2/core";
+
+import {BoardListComponent} from "../board/components/board-list.component.ts";
 import {NavigationService} from "./navigation.service";
-import {OnInit} from "angular2/core";
 
 @Component({
 	selector: 'navigation',
