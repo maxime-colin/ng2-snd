@@ -7,7 +7,7 @@ import {NavigationService} from "./navigation.service";
 	selector: 'navigation',
 })
 @View({
-	templateUrl: 'app/navigation/navigation.template.html',
+	template: require('./navigation.template.html'),
 	directives: [BoardListComponent]
 })
 export class NavigationComponent implements OnInit{
