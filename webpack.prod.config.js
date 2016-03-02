@@ -22,7 +22,7 @@ var PORT = process.env.PORT || 8080;
 
 var metadata = {
   title: 'ng2 - snd',
-  baseUrl: '/Projets/ng2-snd/dist/',
+  baseUrl: '/',
   host: HOST,
   port: PORT,
   ENV: ENV

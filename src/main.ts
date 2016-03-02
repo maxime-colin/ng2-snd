@@ -5,6 +5,7 @@ import * as ngCore from 'angular2/core';
 import * as browser from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
+import {provideStore} from '@ngrx/store';
 
 /*
  * App Environment Providers
@@ -24,6 +25,7 @@ if ('production' === process.env.ENV) {
  * our top level component that holds all of our components
  */
 import {SoundboardAppComponent} from "./app/soundboard-app/soundboard-app.component";
+import {boards} from "./app/board/reducers/boards";
 
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
@@ -34,7 +36,8 @@ export function main() {
     ...ENV_PROVIDERS,
     ...HTTP_PROVIDERS,
     ...ROUTER_PROVIDERS,
-    ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy })
+    ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy }),
+      provideStore({boards})
   ])
   .catch(err => console.error(err));
 }
