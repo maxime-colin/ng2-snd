@@ -166,8 +166,11 @@ export class VoronoiCell {
 	 * @param audioService
 	 */
 	play(fileDatastore: FileDatastore, audioService:AudioService):void {
-		fileDatastore.get(this.cell.audio).subscribe(data => {
-			audioService.playFromDataURL(data);
-		});
+		if( ! this.cell.audioLoaded) {
+			return;
+		}
+	//	fileDatastore.get(this.cell.audio).subscribe(data => {
+			audioService.playFromDataURL(this.cell.audioData);
+	//	});
 	}
 }

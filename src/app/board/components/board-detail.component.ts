@@ -4,12 +4,12 @@ import {Component} from "angular2/core";
 import {View} from "angular2/core";
 import {OnInit} from "angular2/core";
 
-import {BoardListService} from './board-list.service.ts'
+import {BoardService} from './../services/board.service.ts'
 import {VoronoiComponent} from './../../voronoi/voronoi.component.ts'
 
 @Component({
 	selector: 'BoardDetail',
-	bindings: [BoardListService]
+	bindings: [BoardService]
 })
 @View({
 	template: `
@@ -23,7 +23,7 @@ export class BoardDetailComponent implements OnInit{
 	constructor(
 		private _router:Router,
 		private _routeParams:RouteParams,
-		private _boardListService: BoardListService
+		private _boardListService: BoardService
 	) {
 		
 	}
@@ -35,6 +35,4 @@ export class BoardDetailComponent implements OnInit{
 			console.log(board);
 		});
 	}
-
-
 }

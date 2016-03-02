@@ -7,11 +7,12 @@ import {HomeComponent} from "../home/home.component";
 import {AudioService} from "./../audio/audio-service";
 import {NavigationService} from "./../navigation/navigation.service";
 import {NavigationComponent} from "./../navigation/navigation.component";
+import {FileDatastore} from "../services/file-datastore";
 
 
 @Component({
 	selector: 'soundboard-app',
-	bindings: [AudioService, NavigationService],
+	bindings: [AudioService, NavigationService, FileDatastore],
 	host: {
 		'[class.Page-navigationOpened]' : 'navigationOpened'
 	}

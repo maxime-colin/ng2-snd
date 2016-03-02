@@ -1,15 +1,20 @@
 import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs/Observable';
+import {FileDatastore} from "../../services/file-datastore";
 
 
 @Injectable()
-export class BoardListService {
+export class BoardService {
 	
-	constructor() {
+	constructor(private fileDataStore: FileDatastore) {
 		// code...
 	}
 
 	public get() {
+
+		
+
+
 
 		return Observable.create(observer => {
 			var Firebase = require('firebase');
@@ -40,10 +45,19 @@ export class BoardListService {
 			var ref = new Firebase("https://mc-pad-test.firebaseio.com/boards/" + boardId);
 		
 			// Attach an asynchronous callback to read the data at our posts reference
-			ref.on("value", function(snapshot) {
+			ref.on("value", (snapshot) => {
 
 				var obj = snapshot.val();
-		
+				
+				console.log(obj);
+
+				_.each(obj.tiles, (tile) => {
+					this.fileDataStore.get(tile.audio).subscribe((data) => {
+						tile.audioData = data;
+						tile.audioLoaded = true;
+					});
+				});
+
 				observer.next(obj);
 			}, function (errorObject) {
 				console.log("The read failed: " + errorObject.code);

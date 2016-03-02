@@ -14,7 +14,6 @@ import {AudioService} from "../audio/audio-service";
 
 @Component({
 	selector: 'Voronoi',
-	bindings: [FileDatastore]
 })
 @View({
 	template: `<div (window:resize)="onResize($event)"></div>`

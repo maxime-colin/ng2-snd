@@ -13,11 +13,11 @@ import {provideStore} from '@ngrx/store';
  */
 const ENV_PROVIDERS = [];
 
+ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS_PROD_MODE);
 if ('production' === process.env.ENV) {
-  ngCore.enableProdMode();
-  ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS_PROD_MODE);
+	ngCore.enableProdMode();
 } else {
-  ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
+	ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
 }
 
 /*
@@ -26,20 +26,30 @@ if ('production' === process.env.ENV) {
  */
 import {SoundboardAppComponent} from "./app/soundboard-app/soundboard-app.component";
 import {boards} from "./app/board/reducers/boards";
+import {AngularFire, defaultFirebase, FIREBASE_PROVIDERS, FirebaseListObservable} from 'angularfire2'
 
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
  * our Services and Providers into Angular's dependency injection
  */
 export function main() {
-  return browser.bootstrap(SoundboardAppComponent, [
-    ...ENV_PROVIDERS,
-    ...HTTP_PROVIDERS,
-    ...ROUTER_PROVIDERS,
-    ngCore.provide(LocationStrategy, { useClass: HashLocationStrategy }),
-      provideStore({boards})
-  ])
-  .catch(err => console.error(err));
+	return browser.bootstrap(SoundboardAppComponent, [
+		// Angular stuff
+		...ENV_PROVIDERS,
+		...HTTP_PROVIDERS,
+		...ROUTER_PROVIDERS,
+		ngCore.provide(LocationStrategy, {useClass: HashLocationStrategy}),
+
+		// Common injectable providers from the AngularFire lib
+		FIREBASE_PROVIDERS,
+
+		// Tell AngularFire the base URL for the Firebase used throughout
+		defaultFirebase('https://mc-pad-test.firebaseio.com'),
+
+		// Redux store
+		provideStore({boards})
+	])
+	.catch(err => console.error(err));
 }
 
 
@@ -56,22 +66,22 @@ export function main() {
  */
 
 function bootstrapDomReady() {
-  // bootstrap after document is ready
-  return document.addEventListener('DOMContentLoaded', main);
+	// bootstrap after document is ready
+	return document.addEventListener('DOMContentLoaded', main);
 }
 
 if ('development' === process.env.ENV) {
-  // activate hot module reload
-  if (process.env.HMR) {
-    if (document.readyState === 'complete') {
-      main();
-    } else {
-      bootstrapDomReady();
-    }
-    module.hot.accept();
-  } else {
-    bootstrapDomReady();
-  }
+	// activate hot module reload
+	if (process.env.HMR) {
+		if (document.readyState === 'complete') {
+			main();
+		} else {
+			bootstrapDomReady();
+		}
+		module.hot.accept();
+	} else {
+		bootstrapDomReady();
+	}
 } else {
-  bootstrapDomReady();
+	bootstrapDomReady();
 }
