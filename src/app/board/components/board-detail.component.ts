@@ -32,7 +32,6 @@ export class BoardDetailComponent implements OnInit{
 		let boardId = this._routeParams.get('boardId');
 		this._boardListService.getBoardById(boardId).subscribe(board => {
 			this.board = board;
-			console.log(board);
 		});
 	}
 }

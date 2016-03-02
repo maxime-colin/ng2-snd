@@ -1,8 +1,8 @@
 <ul class="BoardList">
-	<li class="BoardList_item" *ngFor="#board of boards">
+	<li class="BoardList_item" *ngFor="#board of boards | async">
 		<a
 			class="BoardList_link"
-			[routerLink]="['BoardDetail', {boardId : board.key }]"
+			[routerLink]="['BoardDetail', {boardId : board.url }]"
 		>{{ board.title }}</a>
 	</li>
 </ul>

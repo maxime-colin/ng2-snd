@@ -15,10 +15,6 @@ export class VoronoiCellRenderer {
 		this.label = new this.paper.PointText(new this.paper.Point(10,10));
 		this.label.justification = 'center';
 		this.label.fillColor = '#00B2B2';
-		//if( ! cell.getCell().audioLoaded) {
-		//	this.label.fillColor = '#FF0000';
-		//}
-
 		this.label.fontWeight = 300;
 
 		//noinspection TypeScriptUnresolvedVariable

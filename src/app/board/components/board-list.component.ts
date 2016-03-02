@@ -17,8 +17,6 @@ export class BoardListComponent implements OnInit{
 	}
 
 	ngOnInit() {
-		this._boardListService.get().subscribe(boards => {
-			this.boards = boards;
-		});
+		this.boards = this._boardListService.get();
 	}
 }
