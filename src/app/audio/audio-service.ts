@@ -87,9 +87,9 @@ export class AudioService {
 
 
 
-    public playFromDataURL(audioDataURL){
+    public playFromDataURL(blob){
 
-        if( ! audioDataURL) {
+        if( ! blob) {
             return;
         }
 
@@ -110,11 +110,12 @@ export class AudioService {
          filter.frequency.value = 44000; // Set cutoff to 440 HZ
          */
 
+
         // Play blob
-        var blob = this.dataURItoBlob(audioDataURL);
-        this.blobToArrayBuffer(blob, (arrayBuffer) =>{
-            this.play(source, filter, arrayBuffer);
-        });
+   //     var blob = this.dataURItoBlob(audioDataURL);
+     //   this.blobToArrayBuffer(blob, (arrayBuffer) =>{
+            this.play(source, filter, blob);
+       // });
 
         return {source : source, filter : filter};
     }

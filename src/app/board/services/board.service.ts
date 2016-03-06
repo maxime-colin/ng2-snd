@@ -31,10 +31,11 @@ export class BoardService {
 			ref.on("value", (snapshot) => {
 
 				var obj = snapshot.val();
-
 				// Load audio
 				// @todo : Gérer le chargement ailleurs
 				_.each(obj.tiles, (tile) => {
+
+					tile.audio = tile.audio.replace('store/', 'audio-store/') + '.mp3';
 					this.fileDataStore.get(tile.audio).subscribe((data) => {
 						tile.audioData = data;
 						tile.audioLoaded = true;
