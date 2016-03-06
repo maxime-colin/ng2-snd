@@ -1,5 +1,6 @@
 ##ng2-snd
 
+[![Build Status](https://api.travis-ci.org/maxime-colin/ng2-snd.svg?branch=master)](https://travis-ci.org/maxime-colin/ng2-snd)
 
 ###Installation
 
