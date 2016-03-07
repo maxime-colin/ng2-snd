@@ -21,7 +21,7 @@ var HOST = process.env.HOST || 'localhost';
 var PORT = process.env.PORT || 8080;
 
 var metadata = {
-  title: 'ng2 - snd',
+  title: 'Soundboard.top',
   baseUrl: '/',
   host: HOST,
   port: PORT,
@@ -55,7 +55,7 @@ module.exports = helpers.validate({
   resolve: {
     cache: false,
     // ensure loader extensions match
-    extensions: ['', '.ts','.js']
+    extensions: ['', '.ts', '.js', '.less']
   },
 
   module: {
@@ -100,10 +100,7 @@ module.exports = helpers.validate({
       },
 
       // Support for CSS as raw text
-      {
-        test: /\.css$/,
-        loader: 'raw-loader'
-      },
+      { test: /\.less$/, loader: 'style-loader!css-loader!less-loader' },
 
       // support for .html as raw text
       {

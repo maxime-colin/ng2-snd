@@ -7,6 +7,9 @@ import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {provideStore} from '@ngrx/store';
 
+
+require('./styles/main.less');
+
 /*
  * App Environment Providers
  * providers that only live in certain environment
