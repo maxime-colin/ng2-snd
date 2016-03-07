@@ -7,23 +7,6 @@ export class VoronoiRenderer {
 
 	private paper: any;
 	private cellsRenderer: VoronoiCellRenderer[] = [];
-	private cellColors = [
-		'C8E6C9',
-		'FFECB3',
-		'F0F4C3',
-		'F8BBD0',
-		'FFCCBC',
-		'D1C4E9',
-		'DCEDC8',
-		'BBDEFB',
-		'B3E5FC',
-		'B2EBF2',
-		'B2DFDB',
-		'C5CAE9',
-		'FFF9C4',
-		'E1BEE7',
-		'FFE0B2',
-	];
 	private onFrameMethod = (event) => this.onFrame(event);
 
 
@@ -75,13 +58,8 @@ export class VoronoiRenderer {
 	 * Create cells renderer
 	 */
 	private createCellsRenderer():void {
-		let currentCellColorId = 0;
-
 		for (let cell of this.diagram.getVoronoiCells()) {
-			cell.color = this.cellColors[currentCellColorId];
 			this.cellsRenderer.push(new VoronoiCellRenderer(cell, this.paper));
-
-			currentCellColorId = (currentCellColorId+1) % this.cellColors.length;
 		}
 	}
 

@@ -25,7 +25,6 @@ export class VoronoiBoard {
             cells.push(
                 new VoronoiCell(
                     tile,
-                   // Point.random(this.diagram.getDimension())
                     new Point(
                         Math.round(this.diagram.getDimension().width  * i / (length  +2)),
                         Math.round(this.diagram.getDimension().height * i / (length  +2))

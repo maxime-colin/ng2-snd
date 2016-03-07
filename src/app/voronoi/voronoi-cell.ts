@@ -115,6 +115,11 @@ export class VoronoiCell {
 	public boundingBox() {
 
 		var first 	= this.path[0];
+
+		if( ! first) {
+			return [];
+		}
+
 		var xRight 	= first.x;
 		var xLeft 	= first.x;
 		var yTop 	= first.y;
