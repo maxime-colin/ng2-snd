@@ -2,7 +2,7 @@
 	<li class="BoardList_item" *ngFor="#board of boards | async">
 		<a
 			class="BoardList_link"
-			[routerLink]="['BoardDetail', {boardId : board.url }]"
+			[routerLink]="['Board', {boardId : board.url }]"
 		>{{ board.title }}</a>
 	</li>
 </ul>

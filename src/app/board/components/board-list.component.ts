@@ -4,7 +4,7 @@ import {BoardService} from './../services/board.service.ts'
 import {VoronoiComponent} from "./../../voronoi/voronoi.component.ts";
 
 @Component({
-	selector: 'board-list',
+	selector: 'BoardList',
 	bindings: [BoardService]
 })
 @View({

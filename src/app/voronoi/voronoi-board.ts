@@ -18,13 +18,13 @@ export class VoronoiBoard {
     private populateFromBoard() {
         const cells: VoronoiCell[] = [];
         let i = 2;
-        let length = _.size(this.board.tiles);
+        let length = _.size(this.board.cells);
 
-        _.each(this.board.tiles, (tile) => {
+        _.each(this.board.cells, (cell) => {
             i++;
             cells.push(
                 new VoronoiCell(
-                    tile,
+                    cell,
                     new Point(
                         Math.round(this.diagram.getDimension().width  * i / (length  +2)),
                         Math.round(this.diagram.getDimension().height * i / (length  +2))

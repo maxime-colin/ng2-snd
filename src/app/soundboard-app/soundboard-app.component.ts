@@ -3,47 +3,36 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 import {RouteConfig} from "angular2/router";
 
 import {BoardDetailComponent} from './../board/components/board-detail.component.ts';
-import {HomeComponent} from "../home/home.component";
+import {HomeComponent} from "../route-components/home.component.ts";
 import {AudioService} from "./../audio/audio-service";
-import {NavigationService} from "./../navigation/navigation.service";
-import {NavigationComponent} from "./../navigation/navigation.component";
 import {FileDatastore} from "../services/file-datastore";
+import {BoardRouteComponent} from "../route-components/board.route-component";
+import {BoardService} from "../board/services/board.service";
 
 
 @Component({
 	selector: 'soundboard-app',
-	bindings: [AudioService, NavigationService, FileDatastore],
+	bindings: [AudioService, FileDatastore, BoardService],
 	host: {
 		'[class.Page-navigationOpened]' : 'navigationOpened'
 	}
 })
 @View({
 	template: require('./soundboard-app.template.html'),
-	directives: [ROUTER_DIRECTIVES, NavigationComponent]
+	directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([
 	{
 		path:'/',
 		name: 'Home',
-		component: HomeComponent
+		component: HomeComponent,
+		useAsDefault: true
 	},
 	{
 		path:'/board/:boardId',
-		name: 'BoardDetail',
-		component: BoardDetailComponent
+		name: 'Board',
+		component: BoardRouteComponent
 	},
 ])
 export class SoundboardAppComponent {
-	public navigationOpened: boolean = false;
-
-	constructor(
-		private navigationService: NavigationService
-	) {}
-
-	ngOnInit():any {
-		this.navigationOpened = this.navigationService.state.opened;
-		this.navigationService.change$.subscribe(state => {
-			this.navigationOpened = state.opened;
-		});
-	}
 }

@@ -2,6 +2,7 @@ import {Injectable} from 'angular2/core';
 import {Observable} from 'rxjs/Observable';
 import {FileDatastore} from "../../services/file-datastore";
 import {AngularFire} from "angularfire2";
+import {Board} from "../models/board";
 
 
 @Injectable()
@@ -19,7 +20,7 @@ export class BoardService {
 	}
 
 
-	public getBoardById(boardId: string) : Observable<any>{
+	public getBoardById(boardId: string) : Observable<Board>{
 
 		return Observable.create(observer => {
 			var Firebase = require('firebase');
@@ -30,19 +31,26 @@ export class BoardService {
 			// Attach an asynchronous callback to read the data at our posts reference
 			ref.on("value", (snapshot) => {
 
-				var obj = snapshot.val();
+				
+				var rawObj= snapshot.val();
+
+				// Typing
+				rawObj.cells = rawObj.tiles;
+				var board = <Board>rawObj;
+				
 				// Load audio
 				// @todo : Gérer le chargement ailleurs
-				_.each(obj.tiles, (tile) => {
+				_.each(board.cells, (cell) => {
 
-					tile.audio = tile.audio.replace('store/', 'audio-store/') + '.mp3';
-					this.fileDataStore.get(tile.audio).subscribe((data) => {
-						tile.audioData = data;
-						tile.audioLoaded = true;
+					cell.audio = cell.audio.replace('store/', 'audio-store/') + '.mp3';
+
+					this.fileDataStore.get(cell.audio).subscribe((data) => {
+						cell.audioData = data;
+						cell.audioLoaded = true;
 					});
 				});
 
-				observer.next(obj);
+				observer.next(board);
 			}, function (errorObject) {
 				console.log("The read failed: " + errorObject.code);
 			});
