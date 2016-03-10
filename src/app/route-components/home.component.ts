@@ -7,7 +7,7 @@ import {OnDestroy} from "angular2/core";
 import {BoardListComponent} from "../board/components/board-list.component";
 
 @Component({
-	selector : 'home',
+	selector : 'Home',
 })
 @View({
 	template: `

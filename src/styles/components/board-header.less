@@ -1,0 +1,31 @@
+.BoardHeader {
+	display: flex;
+	line-height: 60px;
+}
+
+.BoardHeader_back {
+	flex: 1;
+	max-width: 60px;
+	width: 60px;
+	text-align: center;
+}
+
+.BoardHeader_logo {
+	height: 20px;
+	vertical-align: middle;
+}
+
+.BoardHeader_title {
+	flex: 1;
+	font-size: 30px;
+	color: #2B2B2B;
+	font-weight: 700;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+@media (max-width: 600px) {
+	.BoardHeader_title {
+		font-size: 5vw;
+	}
+}
