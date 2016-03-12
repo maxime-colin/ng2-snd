@@ -14,6 +14,7 @@ import {VoronoiComponent} from "./../../voronoi/voronoi.component.ts";
 export class BoardListComponent implements OnInit{
 	boards: any;
 	constructor(private _boardListService: BoardService) {
+
 	}
 
 	ngOnInit() {

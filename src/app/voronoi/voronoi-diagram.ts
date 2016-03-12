@@ -105,10 +105,10 @@ export class VoronoiDiagram {
 	 */
 	private calculateDiagram(): void {
 		let boundingBox = {
-			xl: -2,
-			xr: this.dimension.width + 2,
-			yt: -2,
-			yb: this.dimension.height + 2
+			xl: 5,
+			xr: this.dimension.width - 5,
+			yt: 5,
+			yb: this.dimension.height - 5
 		};
 
 		const diagram = this.voronoi.compute(this.voronoiCell, boundingBox);
@@ -158,6 +158,11 @@ export class VoronoiDiagram {
 		for (const cellId in this.voronoiCell) {
 			const cell = this.voronoiCell[cellId];
 			const boundingBox = cell.boundingBox();
+
+			if( ! boundingBox[1]) {
+				continue;
+			}
+
 			const ratio = (boundingBox[1].x - boundingBox[0].x) / (boundingBox[1].y - boundingBox[0].y);
 
 			minRatio = Math.min(minRatio, ratio);
@@ -169,6 +174,12 @@ export class VoronoiDiagram {
 		}
 		for (let cell of this.voronoiCell) {
 			const boundingBox = cell.boundingBox();
+
+
+			if( ! boundingBox[1]) {
+				continue;
+			}
+
 			const ratio = (boundingBox[1].x - boundingBox[0].x) / (boundingBox[1].y - boundingBox[0].y);
 			const position = cell.getPosition();
 

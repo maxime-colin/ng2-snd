@@ -66,6 +66,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 		this.renderer.stop();
 	}
 
+
 	/**
 	 * On Mouse move
 	 * @param event
