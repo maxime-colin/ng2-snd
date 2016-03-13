@@ -14,7 +14,6 @@ export class VoronoiCell {
 		private cell:any,
 		private position: Point
 	){
-		console.log(paper);
 	}
 
 

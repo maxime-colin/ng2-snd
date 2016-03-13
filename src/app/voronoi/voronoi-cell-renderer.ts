@@ -48,6 +48,20 @@ export class VoronoiCellRenderer {
 
 
 		for(let pointId = 0; pointId < pathLength; pointId++) {
+			let nextPointId 			= (pointId + pathLength + 1) % pathLength;
+			let point 					= new this.paper.Point(path[pointId]);
+			let nextPoint 				= new this.paper.Point(path[nextPointId]);
+
+			if((point.subtract(nextPoint)).length < 20) {
+				path[nextPointId] = (point.add(nextPoint)).divide(2);
+				path[pointId] = null;
+			}
+		}
+
+		path = _.filter(path, item => item);
+		pathLength = path.length;
+
+		for(let pointId = 0; pointId < pathLength; pointId++) {
 
 			let nextPointId 			= (pointId + pathLength + 1) % pathLength;
 			let previousPointId 		= (pointId + pathLength - 1) % pathLength;
@@ -75,19 +89,22 @@ export class VoronoiCellRenderer {
 			if(nextToCurrentVector.length <= radiusSize) {
 				nextToCurrentRadiusSize = 0;
 			}
+
+			let inPoint = newPoint.add(previousToCurrentVector.normalize(previousToCurrentRadiusSize));
+			let outPoint = newPoint.add(nextToCurrentVector.normalize(nextToCurrentRadiusSize));
 			this.path.add({
-				point: newPoint.add(previousToCurrentVector.normalize(previousToCurrentRadiusSize)),
+				point: inPoint,
 				handleOut: previousToCurrentVector.normalize(-previousToCurrentRadiusSize),
 			});
 			this.path.add({
-				point: newPoint.add(nextToCurrentVector.normalize(nextToCurrentRadiusSize)),
+				point: outPoint,
 				handleIn: nextToCurrentVector.normalize(-nextToCurrentRadiusSize),
 			});
 
-			//var shape = new this.paper.Shape.Circle(newPoint.add(previousPoint.subtract(newPoint).normalize(10)), 1);
+			//var shape = new this.paper.Shape.Circle(inPoint, 1);
 			//shape.fillColor = 'red';
 			//
-			//var shape = new this.paper.Shape.Circle(newPoint.add(nextPoint.subtract(newPoint).normalize(10)), 1);
+			//var shape = new this.paper.Shape.Circle(outPoint, 1);
 			//shape.fillColor = 'blue';
 			//
 			//var shape = new this.paper.Shape.Circle(point, 1);
