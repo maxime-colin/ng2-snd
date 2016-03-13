@@ -52,7 +52,7 @@ export class VoronoiCellRenderer {
 			let point 					= new this.paper.Point(path[pointId]);
 			let nextPoint 				= new this.paper.Point(path[nextPointId]);
 
-			if((point.subtract(nextPoint)).length < 20) {
+			if((point.subtract(nextPoint)).length < 10) {
 				path[nextPointId] = (point.add(nextPoint)).divide(2);
 				path[pointId] = null;
 			}
@@ -112,7 +112,7 @@ export class VoronoiCellRenderer {
 		}
 	//	this.removeSmallBits(this.path);
 		this.path.closed = true;
-		this.label.fontSize = ~~(Math.min(this.path.bounds.width * 1.30 / this.label.content.length, 28));
+		this.label.fontSize = (Math.min(this.path.bounds.width * 1.30 / this.label.content.length, 28));
 	}
 
 	public removeSmallBits(path) {

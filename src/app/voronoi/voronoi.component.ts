@@ -47,7 +47,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 	 * @returns {undefined}
      */
 	ngOnInit():any {
-		this.throttledResize = _.throttle(this.resizeHandler, 250);
+		this.throttledResize = _.throttle(this.resizeHandler, 16);
 	}
 
 	/**
