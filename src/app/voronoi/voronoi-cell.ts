@@ -13,7 +13,9 @@ export class VoronoiCell {
 	constructor(
 		private cell:any,
 		private position: Point
-	){}
+	){
+		console.log(paper);
+	}
 
 
 	get x() {

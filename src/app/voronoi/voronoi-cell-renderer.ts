@@ -41,35 +41,47 @@ export class VoronoiCellRenderer {
 		//this.path.strokeWidth = 1;
 
 
+
 		let path = this.cell.getPath();
 		let pathLength = path.length;
-		let padding = 5;
+		let padding = 20;
+
 
 		for(let pointId = 0; pointId < pathLength; pointId++) {
 
-			let nextPointId = (pointId + pathLength + 1) % pathLength;
-			let previousPointId = (pointId + pathLength - 1) % pathLength;
-
-			let previousPoint 	= new this.paper.Point(path[previousPointId]);
-			let point 			= new this.paper.Point(path[pointId]);
-			let nextPoint 		= new this.paper.Point(path[nextPointId]);
-			let vector = (previousPoint.subtract(nextPoint)).normalize(padding);
-			let newPoint = point.clone();
-
-
-			let perpendicular = vector.clone();
+			let nextPointId 			= (pointId + pathLength + 1) % pathLength;
+			let previousPointId 		= (pointId + pathLength - 1) % pathLength;
+			let previousPoint 			= new this.paper.Point(path[previousPointId]);
+			let point 					= new this.paper.Point(path[pointId]);
+			let nextPoint 				= new this.paper.Point(path[nextPointId]);
+			let nextToPreviousVector 	= previousPoint.subtract(nextPoint);
+			let vector					= nextToPreviousVector.normalize(padding);
+			let newPoint 				= point.clone();
+			let radiusSize 				= 10;
+			let perpendicular 			= vector.clone();
 			perpendicular.angle += 90;
+
 			newPoint = newPoint.add(perpendicular);
 
+			let previousToCurrentVector = previousPoint.subtract(newPoint);
+			let nextToCurrentVector = nextPoint.subtract(newPoint);
+			let nextToCurrentRadiusSize = radiusSize;
+			let previousToCurrentRadiusSize = radiusSize;
+
+
+			if(previousToCurrentVector.length <= radiusSize) {
+				previousToCurrentRadiusSize = 0;
+			}
+			if(nextToCurrentVector.length <= radiusSize) {
+				nextToCurrentRadiusSize = 0;
+			}
 			this.path.add({
-				point: newPoint.add(previousPoint.subtract(newPoint).normalize(10)),
-				handleOut: previousPoint.subtract(newPoint).normalize(-10),
+				point: newPoint.add(previousToCurrentVector.normalize(previousToCurrentRadiusSize)),
+				handleOut: previousToCurrentVector.normalize(-previousToCurrentRadiusSize),
 			});
-
-
 			this.path.add({
-				point: newPoint.add(nextPoint.subtract(newPoint).normalize(10)),
-				handleIn: nextPoint.subtract(newPoint).normalize(-10),
+				point: newPoint.add(nextToCurrentVector.normalize(nextToCurrentRadiusSize)),
+				handleIn: nextToCurrentVector.normalize(-nextToCurrentRadiusSize),
 			});
 
 			//var shape = new this.paper.Shape.Circle(newPoint.add(previousPoint.subtract(newPoint).normalize(10)), 1);
@@ -78,8 +90,8 @@ export class VoronoiCellRenderer {
 			//var shape = new this.paper.Shape.Circle(newPoint.add(nextPoint.subtract(newPoint).normalize(10)), 1);
 			//shape.fillColor = 'blue';
 			//
-			//var shape = new this.paper.Shape.Circle(point, 1);
-			//shape.fillColor = 'green';
+			var shape = new this.paper.Shape.Circle(point, 1);
+			shape.fillColor = 'green';
 		}
 	//	this.removeSmallBits(this.path);
 		this.path.closed = true;
