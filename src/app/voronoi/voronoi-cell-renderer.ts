@@ -44,7 +44,7 @@ export class VoronoiCellRenderer {
 
 		let path = this.cell.getPath();
 		let pathLength = path.length;
-		let padding = 20;
+		let padding = 5;
 
 
 		for(let pointId = 0; pointId < pathLength; pointId++) {
@@ -90,8 +90,8 @@ export class VoronoiCellRenderer {
 			//var shape = new this.paper.Shape.Circle(newPoint.add(nextPoint.subtract(newPoint).normalize(10)), 1);
 			//shape.fillColor = 'blue';
 			//
-			var shape = new this.paper.Shape.Circle(point, 1);
-			shape.fillColor = 'green';
+			//var shape = new this.paper.Shape.Circle(point, 1);
+			//shape.fillColor = 'green';
 		}
 	//	this.removeSmallBits(this.path);
 		this.path.closed = true;
