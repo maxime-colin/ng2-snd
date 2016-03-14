@@ -37,7 +37,6 @@ export class PointerControl {
 		this.audioPlayer.play();
 	}
 
-
 	private onDragHandler(event):any {
 		var currentPosition = {
 			x: event.pageX || (event.targetTouches ? event.targetTouches[0].pageX : 0),
