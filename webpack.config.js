@@ -12,7 +12,7 @@ var HMR = process.argv.join('').indexOf('hot') > -1;
 var metadata = {
   title: 'NG2 - Soundboard.top',
   baseUrl: '/',
-  host: 'localhost',
+  host: '192.168.1.11',
   port: 3000,
   ENV: ENV,
   HMR: HMR

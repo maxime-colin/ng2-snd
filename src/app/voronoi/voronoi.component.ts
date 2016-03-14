@@ -13,10 +13,12 @@ import {AudioService} from "../audio/audio-service";
 import {PointerControl} from "./pointer-control";
 import {Renderer} from "angular2/core";
 import {AudioPlayerFactory} from "../audio/audio-player-factory";
+import {PointerEventFactory} from "./../pointer-event/pointer-event-factory";
 
 
 @Component({
 	selector: 'Voronoi',
+	bindings: [PointerEventFactory]
 })
 @View({
 	template: `<div (window:resize)="onResize($event)"></div>`
@@ -42,7 +44,8 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 	constructor(
 		private elementRef: ElementRef,
 		private audioPlayerFactory: AudioPlayerFactory,
-		private renderer: Renderer
+		private renderer: Renderer,
+		private pointerEventFactory: PointerEventFactory
 	) {}
 
 	/**
@@ -85,14 +88,13 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 			cell.clicked = false;
 		}
 
-		// Position
-		const clientX = event.clientX || (event.targetTouches ? event.targetTouches[0].clientX : 0);
-		const clientY = event.clientY || (event.targetTouches ? event.targetTouches[0].clientY : 0);
-		const absoluteClickPosition = new Point(clientX, clientY);
+		// Absolute position
+		let pointerEvent = this.pointerEventFactory.getPointerEvent(event);
 
+		// Relative position
 		var componentBoundingBox = this.elementRef.nativeElement.getBoundingClientRect();
-		const x = clientX - componentBoundingBox.left;
-		const y = clientY - componentBoundingBox.top;
+		const x = pointerEvent.position.x - componentBoundingBox.left;
+		const y = pointerEvent.position.y - componentBoundingBox.top;
 		const relativeClickPosition = new Point(x, y);
 
 		// Look for clicked cell
@@ -106,7 +108,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 			this.audioPlayerFactory,
 			this.renderer
 		);
-		pointerControl.onTouch(absoluteClickPosition);
+		pointerControl.onTouch(pointerEvent);
 	}
 
 

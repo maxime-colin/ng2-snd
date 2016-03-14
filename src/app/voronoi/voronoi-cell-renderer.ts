@@ -48,7 +48,7 @@ export class VoronoiCellRenderer {
 		}
 
 		if(this.cell.highlight > 0) {
-			this.path.fillColor.brightness = 1 - (this.cell.highlight / 2);
+			this.path.fillColor.lightness = 1 - (this.cell.highlight / 2);
 			this.cell.highlight -= 16 / 250;
 		}
 
