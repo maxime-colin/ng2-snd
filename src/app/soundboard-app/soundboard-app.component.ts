@@ -8,11 +8,12 @@ import {AudioService} from "./../audio/audio-service";
 import {FileDatastore} from "../services/file-datastore";
 import {BoardRouteComponent} from "../route-components/board.route-component";
 import {BoardService} from "../board/services/board.service";
+import {AudioPlayerFactory} from "../audio/audio-player-factory";
 
 
 @Component({
 	selector: 'soundboard-app',
-	bindings: [AudioService, FileDatastore, BoardService],
+	bindings: [AudioService, FileDatastore, BoardService, AudioPlayerFactory],
 	host: {
 		'[class.Page-navigationOpened]' : 'navigationOpened'
 	}

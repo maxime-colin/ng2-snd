@@ -37,6 +37,7 @@ export class VoronoiRenderer {
 	public render() {
 		this.paper.view.attach('frame', this.onFrameMethod);
 		this.paper.view.draw();
+		//console.log(this.paper.project.exportSVG({asString: true}));
 	}
 
 	public resize(dimension: Dimension) {

@@ -30,7 +30,7 @@ export class AudioService {
     /**
      * Play
      */
-    public play(source, filter, raw) {
+    public play(destination, source, raw) {
         this.context.decodeAudioData(raw, (buffer) => {
         // Check buffer
         if (!buffer) {
@@ -40,14 +40,8 @@ export class AudioService {
 
         // Create a sound source
         source.buffer = buffer;
-
-        // Connecter la source au this.context
-        //source.connect(filter);
-        //filter.connect(this.context.destination);
-        source.connect(this.context.destination);
-
+        source.connect(destination);
         source.start(0);
-
     },  (error) => {
         console.error("failed to decode:", error);
     });
@@ -102,22 +96,10 @@ export class AudioService {
         // Create source
         var source = this.context.createBufferSource();
 
-        // Create filter
-        var filter = this.context.createBiquadFilter();
-        /*
-         // Create and specify parameters for the low-pass filter.
-         filter.type = 'lowpass'; // Low-pass filter. See BiquadFilterNode docs
-         filter.frequency.value = 44000; // Set cutoff to 440 HZ
-         */
-
-
         // Play blob
-   //     var blob = this.dataURItoBlob(audioDataURL);
-     //   this.blobToArrayBuffer(blob, (arrayBuffer) =>{
-            this.play(source, filter, blob);
-       // });
+        this.play(this.context.destination, source, blob);
 
-        return {source : source, filter : filter};
+        return {source : source};
     }
 
 }

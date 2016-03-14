@@ -10,6 +10,9 @@ import {VoronoiBoard} from "./voronoi-board";
 import {VoronoiRenderer} from "./voronoi-renderer";
 import {FileDatastore} from "../services/file-datastore";
 import {AudioService} from "../audio/audio-service";
+import {PointerControl} from "./pointer-control";
+import {Renderer} from "angular2/core";
+import {AudioPlayerFactory} from "../audio/audio-player-factory";
 
 
 @Component({
@@ -27,19 +30,19 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 
 	// Attributes
 	private diagram: VoronoiDiagram;
-	private renderer: VoronoiRenderer;
+	private voronoiRenderer: VoronoiRenderer;
 	private throttledResize;
 
 
 	/**
 	 * @param elementRef
-	 * @param fileDatastore
-	 * @param audioService
+	 * @param audioPlayerFactory
+ * @param renderer
 	 */
 	constructor(
 		private elementRef: ElementRef,
-		private fileDatastore: FileDatastore,
-		private audioService: AudioService
+		private audioPlayerFactory: AudioPlayerFactory,
+		private renderer: Renderer
 	) {}
 
 	/**
@@ -55,15 +58,15 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
      */
 	ngAfterViewInit():any {
 		this.createDiagram();
-		this.renderer = new VoronoiRenderer(
+		this.voronoiRenderer = new VoronoiRenderer(
 			this.elementRef.nativeElement,
 			this.diagram
 		);
-		this.renderer.render();
+		this.voronoiRenderer.render();
 	}
 
 	ngOnDestroy():any {
-		this.renderer.stop();
+		this.voronoiRenderer.stop();
 	}
 
 
@@ -83,23 +86,29 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 		}
 
 		// Position
-		const clientX = event.clientX || (event.targetTouches ? event.targetTouches[0].clientX : 0)
-		const clientY = event.clientY || (event.targetTouches ? event.targetTouches[0].clientY : 0)
+		const clientX = event.clientX || (event.targetTouches ? event.targetTouches[0].clientX : 0);
+		const clientY = event.clientY || (event.targetTouches ? event.targetTouches[0].clientY : 0);
+		const absoluteClickPosition = new Point(clientX, clientY);
 
 		var componentBoundingBox = this.elementRef.nativeElement.getBoundingClientRect();
 		const x = clientX - componentBoundingBox.left;
 		const y = clientY - componentBoundingBox.top;
+		const relativeClickPosition = new Point(x, y);
 
 		// Look for clicked cell
-		const cell = this.diagram.getVoronoiCellAtPosition(new Point(x, y));
+		const cell = this.diagram.getVoronoiCellAtPosition(relativeClickPosition);
 		if( ! cell) {
 			return;
 		}
-		cell.clicked = true;
 
-		// Play sound
-		cell.play(this.fileDatastore, this.audioService);
+		const pointerControl = new PointerControl(
+			cell,
+			this.audioPlayerFactory,
+			this.renderer
+		);
+		pointerControl.onTouch(absoluteClickPosition);
 	}
+
 
 
 	/**
@@ -115,7 +124,7 @@ export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{
 	 */
 	private resizeHandler() {
 		this.diagram.setDimension(this.getDimension());
-		this.renderer.resize(this.getDimension());
+		this.voronoiRenderer.resize(this.getDimension());
 	}
 
 	/**

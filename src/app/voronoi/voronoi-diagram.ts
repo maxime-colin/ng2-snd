@@ -8,8 +8,6 @@ export class VoronoiDiagram {
 
 	private voronoiCell: VoronoiCell[];
 	private voronoi;
-	private refreshLoopTimer;
-	private refreshLoopTimerIsRunning = false;
 
 
 	constructor(

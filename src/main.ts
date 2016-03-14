@@ -50,7 +50,9 @@ export function main() {
 		defaultFirebase('https://mc-pad-test.firebaseio.com'),
 
 		// Redux store
-		provideStore({boards})
+		provideStore({boards}),
+
+		ngCore.provide(Window, {useValue: window})
 	])
 	.catch(err => console.error(err));
 }

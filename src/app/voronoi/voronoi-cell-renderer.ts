@@ -35,12 +35,22 @@ export class VoronoiCellRenderer {
 		this.label.position = center;
 
 		this.path.removeSegments();
-		this.path.fillColor = '#FFFFFF';
 		//this.path.strokeColor= '#00DBDB';
 		//this.path.strokeJoin = 'round';
 		//this.path.strokeWidth = 1;
 
+		if(this.cell.highlight == 1) {
+			this.path.fillColor = new this.paper.Color('#00B2B2');
+		}
 
+		if(this.cell.highlight <= 0) {
+			this.path.fillColor = new this.paper.Color('#FFFFFF');
+		}
+
+		if(this.cell.highlight > 0) {
+			this.path.fillColor.brightness = 1 - (this.cell.highlight / 2);
+			this.cell.highlight -= 16 / 250;
+		}
 
 		let path = this.cell.getPath();
 		let pathLength = path.length;
@@ -54,7 +64,8 @@ export class VoronoiCellRenderer {
 
 			if((point.subtract(nextPoint)).length < 10) {
 				path[nextPointId] = (point.add(nextPoint)).divide(2);
-				path[pointId] = null;
+				path.splice(pointId, 1);
+				pathLength -= 1;
 			}
 		}
 

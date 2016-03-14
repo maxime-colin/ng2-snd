@@ -2,6 +2,7 @@ import {Point} from "../common/point";
 import {Component} from "../../../node_modules/angular2/core.d";
 import {FileDatastore} from "./../services/file-datastore";
 import {AudioService} from "./../audio/audio-service";
+import {PointerControl} from "./pointer-control";
 
 export class VoronoiCell {
 
@@ -9,12 +10,12 @@ export class VoronoiCell {
 	public clicked = false;
 	public voronoiId;
 	public color;
+	public highlight:number = 0;
 
 	constructor(
 		private cell:any,
 		private position: Point
-	){
-	}
+	){}
 
 
 	get x() {
@@ -152,7 +153,6 @@ export class VoronoiCell {
 
 		var inside = false;
 		for (var i = 0, j = this.path.length - 1; i < this.path.length; j = i++) {
-
 			var xi = this.path[i].x;
 			var yi = this.path[i].y;
 			var xj = this.path[j].x;
@@ -166,17 +166,4 @@ export class VoronoiCell {
 		return inside;
 	};
 
-	/**
-	 * Play sound
-	 * @param fileDatastore
-	 * @param audioService
-	 */
-	play(fileDatastore: FileDatastore, audioService:AudioService):void {
-		if( ! this.cell.audioLoaded) {
-			return;
-		}
-	//	fileDatastore.get(this.cell.audio).subscribe(data => {
-			audioService.playFromDataURL(this.cell.audioData);
-	//	});
-	}
 }
