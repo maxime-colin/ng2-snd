@@ -1,4 +1,4 @@
-<ul class="BoardList">
+<ul class="BoardList" (scroll)="onScroll($event)">
 	<li class="BoardList_item" *ngFor="#board of boards | async">
 		<a
 			class="BoardList_link"

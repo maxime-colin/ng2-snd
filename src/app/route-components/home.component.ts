@@ -20,4 +20,5 @@ import {BoardListComponent} from "../board/components/board-list.component";
 	directives: [BoardListComponent]
 })
 export class HomeComponent {
+
 }
