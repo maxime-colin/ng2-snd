@@ -22,10 +22,11 @@ import {RouteParams} from "angular2/router";
 		useAsDefault: true
 	},
 	{
-		path:'/edit',
+		path:'edit',
 		name: 'Edit',
 		component: BoardEditRouteComponent
 	},
 ])
 export class BoardRouteComponent {
 }
+
