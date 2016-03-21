@@ -26,8 +26,6 @@ export class BoardListComponent implements OnInit{
 	ngOnInit() {
 		this.boards = this.boardListService.get().do(() => {
 			setTimeout(() => {
-
-				console.log(sessionStorage.getItem(BoardListComponent.SCROLL_TOP_KEY));
 				this.elementRef.nativeElement.children[0].scrollTop = sessionStorage.getItem(BoardListComponent.SCROLL_TOP_KEY);
 			}, 50);
 		});

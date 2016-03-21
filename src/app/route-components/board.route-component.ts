@@ -1,43 +1,31 @@
-import {View} from "angular2/core";
-import {Component} from "angular2/core";
-import {OnInit} from "angular2/core";
-import {Router} from "angular2/router";
+import {BoardEditRouteComponent} from "./board-edit.route-component";
+import {Component, View} from "angular2/core";
+import {RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
+import {BoardDetailRouteComponent} from "./board-detail.route-component";
 import {RouteParams} from "angular2/router";
-import {BoardService} from "../board/services/board.service";
-import {BoardDetailComponent} from "../board/components/board-detail.component";
-import {BoardHeaderComponent} from "../board/components/board-header.component";
-import {Board} from "../board/models/board";
-
 
 @Component({
-	selector: 'BoardRouteComponent',
+	selector: 'BoardRoute',
+	host: {class: 'FillContainer'}
 })
 @View({
 	template: `
-		<div class="Page" *ngIf="board">
-			<div class="Page_header">
-				<BoardHeader [board]="board"></BoardHeader>
-			</div>
-			<div class="Page_content">
-				<BoardDetail [board]="board"></BoardDetail>
-			</div>
-		</div>
+		<router-outlet></router-outlet>
 	`,
-	directives: [BoardDetailComponent, BoardHeaderComponent]
+	directives: [ROUTER_DIRECTIVES]
 })
-export class BoardRouteComponent implements OnInit {
-
-	public board:Board;
-
-	constructor(
-		private routeParams:RouteParams,
-		private boardListService: BoardService
-	) {}
-
-	ngOnInit() {
-		let boardId = this.routeParams.get('boardId');
-		this.boardListService.getBoardById(boardId).subscribe(board => {
-			this.board = board;
-		});
-	}
+@RouteConfig([
+	{
+		path:'',
+		name: 'Detail',
+		component: BoardDetailRouteComponent,
+		useAsDefault: true
+	},
+	{
+		path:'/edit',
+		name: 'Edit',
+		component: BoardEditRouteComponent
+	},
+])
+export class BoardRouteComponent {
 }

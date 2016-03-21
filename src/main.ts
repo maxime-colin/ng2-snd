@@ -29,7 +29,7 @@ if ('production' === process.env.ENV) {
  */
 import {SoundboardAppComponent} from "./app/soundboard-app/soundboard-app.component";
 import {boards} from "./app/board/reducers/boards";
-import {AngularFire, defaultFirebase, FIREBASE_PROVIDERS, FirebaseListObservable} from 'angularfire2'
+import {FIREBASE_PROVIDERS, defaultFirebase, AngularFire} from 'angularfire2'
 
 /*
  * Bootstrap our Angular app with a top level component `App` and inject

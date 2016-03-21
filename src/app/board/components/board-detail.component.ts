@@ -7,6 +7,7 @@ import {Board} from "../models/board";
 
 @Component({
 	selector: 'BoardDetail',
+	host: {class: 'BoardDetail'}
 })
 @View({
 	template: `

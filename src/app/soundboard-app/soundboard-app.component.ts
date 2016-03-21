@@ -9,18 +9,21 @@ import {FileDatastore} from "../services/file-datastore";
 import {BoardRouteComponent} from "../route-components/board.route-component";
 import {BoardService} from "../board/services/board.service";
 import {AudioPlayerFactory} from "../audio/audio-player-factory";
+import {SidemenuComponent} from "../sidemenu/sidemenu.component";
 
 
 @Component({
 	selector: 'soundboard-app',
 	bindings: [AudioService, FileDatastore, BoardService, AudioPlayerFactory],
-	host: {
-		'[class.Page-navigationOpened]' : 'navigationOpened'
-	}
 })
 @View({
-	template: require('./soundboard-app.template.html'),
-	directives: [ROUTER_DIRECTIVES]
+	template: `
+		<Sidemenu class="App_sidemenu"></Sidemenu>
+		<div class="App_content">
+			<router-outlet></router-outlet>
+		</div>
+	`,
+	directives: [ROUTER_DIRECTIVES, SidemenuComponent]
 })
 @RouteConfig([
 	{
@@ -30,7 +33,7 @@ import {AudioPlayerFactory} from "../audio/audio-player-factory";
 		useAsDefault: true
 	},
 	{
-		path:'/board/:boardId',
+		path:'/board/:boardId/...',
 		name: 'Board',
 		component: BoardRouteComponent
 	},
