@@ -17,9 +17,6 @@ export class VoronoiCellRenderer {
 		this.label.fillColor = '#575757';
 
 		let title = cell.getCell().title;
-		//titleLines = title.split(' ');
-
-
 		//noinspection TypeScriptUnresolvedVariable
 		this.label.content = title.toUpperCase();
 		this.label.fontFamily = 'Roboto Condensed';
@@ -35,9 +32,6 @@ export class VoronoiCellRenderer {
 		this.label.position = center;
 
 		this.path.removeSegments();
-		//this.path.strokeColor= '#00DBDB';
-		//this.path.strokeJoin = 'round';
-		//this.path.strokeWidth = 1;
 
 		if(this.cell.highlight == 1) {
 			this.path.fillColor = new this.paper.Color('#00B2B2');
