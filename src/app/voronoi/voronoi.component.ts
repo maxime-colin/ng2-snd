@@ -1,10 +1,8 @@
-import {Component, View, OnInit, AfterViewInit, Input, ElementRef} from 'angular2/core';
+import {Component, OnInit, AfterViewInit, Input, ElementRef} from 'angular2/core';
 import {HostListener} from "angular2/core";
 import {OnDestroy} from "angular2/core";
-
 import {Point} from "../common/point";
 import {Dimension} from "../common/dimension";
-
 import {VoronoiDiagram} from "./voronoi-diagram";
 import {VoronoiBoard} from "./voronoi-board";
 import {VoronoiRenderer} from "./voronoi-renderer";
@@ -18,11 +16,8 @@ import {PointerEventFactory} from "./../pointer-event/pointer-event-factory";
 
 @Component({
 	selector: 'Voronoi',
-	bindings: [PointerEventFactory]
-})
-@View({
-	template: `<div (window:resize)="onResize($event)"></div>`
-	,
+	bindings: [PointerEventFactory],
+	template: `<div (window:resize)="onResize($event)"></div>`,
 	directives: []
 })
 export class VoronoiComponent implements OnInit, AfterViewInit , OnDestroy{

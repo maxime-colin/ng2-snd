@@ -1,14 +1,12 @@
 import {BoardEditRouteComponent} from "./board-edit.route-component";
-import {Component, View} from "angular2/core";
+import {Component} from "angular2/core";
 import {RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
 import {BoardDetailRouteComponent} from "./board-detail.route-component";
 import {RouteParams} from "angular2/router";
 
 @Component({
 	selector: 'BoardRoute',
-	host: {class: 'FillContainer'}
-})
-@View({
+	host: {class: 'FillContainer'},
 	template: `
 		<router-outlet></router-outlet>
 	`,

@@ -1,4 +1,4 @@
-import {Component, View} from 'angular2/core';
+import {Component} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from "angular2/router";
 import {RouteConfig} from "angular2/router";
 
@@ -15,8 +15,6 @@ import {SidemenuComponent} from "../sidemenu/sidemenu.component";
 @Component({
 	selector: 'soundboard-app',
 	bindings: [AudioService, FileDatastore, BoardService, AudioPlayerFactory],
-})
-@View({
 	template: `
 		<Sidemenu class="App_sidemenu"></Sidemenu>
 		<div class="App_content">

@@ -1,4 +1,3 @@
-import {View} from "angular2/core";
 import {Component} from "angular2/core";
 import {OnInit} from "angular2/core";
 import {Router} from "angular2/router";
@@ -12,9 +11,7 @@ import {Injector} from "angular2/core";
 
 @Component({
 	selector: 'BoardDetailRoute',
-	host: {class: 'FillContainer'}
-})
-@View({
+	host: {class: 'FillContainer'},
 	template: `
 		<div class="Page" *ngIf="board">
 			<div class="Page_header">
