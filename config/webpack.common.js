@@ -192,6 +192,11 @@ module.exports = {
       to: 'assets'
     }]),
 
+    new CopyWebpackPlugin([{
+      from: 'src/CNAME',
+      to: '.'
+    }]),
+
     // Plugin: HtmlWebpackPlugin
     // Description: Simplifies creation of HTML files to serve your webpack bundles.
     // This is especially useful for webpack bundles that include a hash in the filename
