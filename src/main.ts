@@ -5,7 +5,6 @@
 export interface FirebaseWithPromise<T> extends Firebase, Promise<T> {}
 // /TEMP
 
-
 import * as ngCore from 'angular2/core';
 import * as browser from 'angular2/platform/browser';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
