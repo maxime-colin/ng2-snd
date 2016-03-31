@@ -17,6 +17,8 @@ export class VoronoiCellRenderer {
 		this.label.fillColor = '#575757';
 
 		let title = cell.getCell().title;
+		title = this.splitHalf(title).join("\r\n");
+		
 		//noinspection TypeScriptUnresolvedVariable
 		this.label.content = title.toUpperCase();
 		this.label.fontFamily = 'Roboto Condensed';
@@ -24,6 +26,35 @@ export class VoronoiCellRenderer {
 		this.label.bringToFront();
 
 		this.updatePath();
+	}
+
+	private splitHalf(text:string):string[] {
+
+		let splitted;
+
+		if(text.indexOf(' ') == -1) {
+			splitted = [text];
+		}
+
+		else if(text.indexOf(' ', text.indexOf(' ') + 1) == -1) {
+			splitted = text.split(' ');
+		}
+		else {
+			var p = text.slice(text.length/2.5).split(" ").slice(1).join(" ").length;
+			let s1 = text.slice(0, text.length-p);
+			let s2 = text.slice(text.length-p);
+
+			splitted = [s1, s2];
+		}
+
+		splitted = _.filter(splitted, (item) => item);
+
+		let minLength = _.min(_.map(splitted, line => line.length));
+		if(minLength <= 1) {
+			splitted = [splitted.join(' ')];
+		}
+
+		return splitted;
 	}
 
 	public updatePath() {
@@ -117,7 +148,10 @@ export class VoronoiCellRenderer {
 		}
 	//	this.removeSmallBits(this.path);
 		this.path.closed = true;
-		this.label.fontSize = (Math.min(this.path.bounds.width * 1.30 / this.label.content.length, 28));
+
+		let maxLineSize = _.max(_.map(this.label.content.split("\r\n"), text => text.length));
+
+		this.label.fontSize = (Math.min(this.path.bounds.width * 1.30 / maxLineSize, 26));
 	}
 
 	public removeSmallBits(path) {
