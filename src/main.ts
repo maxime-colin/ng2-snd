@@ -22,11 +22,7 @@ require('./styles/main.less');
 const ENV_PROVIDERS = [];
 
 ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS_PROD_MODE);
-if ('production' === process.env.ENV) {
-	ngCore.enableProdMode();
-} else {
-	ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
-}
+ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
 
 /*
  * App Component
