@@ -21,7 +21,7 @@ require('./styles/main.less');
 const ENV_PROVIDERS = [];
 
 ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS_PROD_MODE);
-if ( process != null && process.env.ENV != 'production') {
+if ( (typeof process != 'undefined') && process.env.ENV != 'production') {
 	ENV_PROVIDERS.push(browser.ELEMENT_PROBE_PROVIDERS);
 } else {
 	ngCore.enableProdMode();
@@ -79,7 +79,7 @@ function bootstrapDomReady() {
 	return document.addEventListener('DOMContentLoaded', main);
 }
 
-if (process != null && process.env.ENV == 'development') {
+if ((typeof process != 'undefined') && process.env.ENV == 'development') {
 	// activate hot module reload
 	if (process.env.HMR) {
 		if (document.readyState === 'complete') {
