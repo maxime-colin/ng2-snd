@@ -1,20 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <base href="<%= APP_BASE %>">
+  <title><%= APP_TITLE %></title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title><%= APP_TITLE %></title>
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F7DA22">
+  <meta name="viewport" content="user-scalable=no">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:700,300,400|Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
+
+
+  <style type="text/css">
+    body {
+      background-color: #F7DA22;
+      padding:0;
+      margin:0;
+    }
+    .Loading {
+      line-height: 60vh;
+      text-align: center;
+      font-size: 20vmin;
+      width: 100%;
+    }
+
+    .Loading *:nth-child(1) {
+      animation: blink 600ms infinite 0ms;
+    }
+
+    .Loading *:nth-child(2) {
+      animation: blink 600ms infinite 200ms;
+    }
+
+    .Loading *:nth-child(3) {
+      animation: blink 600ms infinite 300ms;
+    }
+
+    @keyframes blink{
+      to{opacity: 0.25;}
+    }
+  </style>
+
   <!-- inject:css -->
   <!-- endinject -->
+
+  <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
 </head>
-<body>
 
-  <sd-app>Loading...</sd-app>
+<body class="BodyLayout">
+<soundboard-app class="App">
+  <div class="Loading"><span>.</span><span>.</span><span>.</span></div>
+</soundboard-app>
 
-  <script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.5.1/lodash.min.js"></script>
+<script src="assets/libs/QuadTree.js"></script>
+<script src="assets/libs/paper-full.js"></script>
+<script src="assets/libs/rhill-voronoi-core.js"></script>
+
+
+<script>
   // function.name (all IE)
   // Remove once https://github.com/angular/angular/issues/6501 is fixed.
   /*! @source http://stackoverflow.com/questions/6903762/function-name-not-supported-in-ie*/
@@ -30,39 +78,39 @@
       }
     });
   }
-  </script>
+</script>
 
-  <script>
+<script>
   // Fixes undefined module function in SystemJS bundle
   function module() {}
-  </script>
+</script>
 
-  <!-- shims:js -->
-  <!-- endinject -->
+<!-- shims:js -->
+<!-- endinject -->
 
-  <% if (ENV === 'dev') { %>
-  <script>
-    System.config(<%=
-      JSON.stringify(SYSTEM_CONFIG, null, 2)
-    %>)
-  </script>
-  <% } %>
+<% if (ENV === 'dev') { %>
+<script>
+  System.config(<%=
+          JSON.stringify(SYSTEM_CONFIG, null, 2)
+          %>)
+</script>
+<% } %>
 
-  <!-- libs:js -->
-  <!-- endinject -->
+<!-- libs:js -->
+<!-- endinject -->
 
-  <!-- inject:js -->
-  <!-- endinject -->
+<!-- inject:js -->
+<!-- endinject -->
 
-  <% if (ENV === 'dev') { %>
-  <script>
+<% if (ENV === 'dev') { %>
+<script>
   System.import('<%= BOOTSTRAP_MODULE %>')
-    .catch(function (e) {
-      console.error(e,
-        'Report this error at https://github.com/mgechev/angular2-seed/issues');
-    });
-  </script>
-  <% } %>
+          .catch(function (e) {
+            console.error(e,
+                    'Error');
+          });
+</script>
+<% } %>
 
 </body>
 </html>

@@ -82,6 +82,8 @@ export class SeedConfig {
       'angular2/*': `${this.APP_BASE}angular2/*`,
       'rxjs/*': `${this.APP_BASE}rxjs/*`,
       'app/*': `/app/*`,
+      'firebase': '/node_modules/firebase/lib/firebase-web',
+      '@ngrx/*': `${this.APP_BASE}node_modules/@ngrx/store/dist/*`,
       '*': `${this.APP_BASE}node_modules/*`
     },
     packages: {
@@ -97,7 +99,9 @@ export class SeedConfig {
     packageConfigPaths: [join(this.PROJECT_ROOT, 'node_modules', '*', 'package.json')],
     paths: {
       [`${this.TMP_DIR}/*`]: `${this.TMP_DIR}/*`,
-      '*': 'node_modules/*'
+      '*': 'node_modules/*',
+      'firebase': 'node_modules/firebase/lib/firebase-web.js',
+      'angularfire2': `node_modules/angularfire2/angularfire2.js`,
     }
   };
 
